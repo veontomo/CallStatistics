@@ -2,6 +2,8 @@ package com.veontomo.callstatistics;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -45,11 +47,23 @@ public class DiagramView extends View {
     }
 
 
-    public void setText(String text){
+    public void setText(String text) {
         this.mText = text;
         Log.i(Config.appName, "set text to \"" + text + "\".");
         invalidate();
         requestLayout();
 
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        canvas.drawRect(0f, 0f, 20f, 200f, new Paint(1));
+        canvas.drawRect(0f, 30f, 50f, 100f, new Paint(1));
+
+        canvas.drawText("aaaaaa ]]]]]]]]]]]] ]]] ]] ] ] ] ] ] ] ]", 10, 200, new Paint(0));
+
+        invalidate();
+        requestLayout();
     }
 }

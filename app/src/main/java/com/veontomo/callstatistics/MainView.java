@@ -1,13 +1,19 @@
 package com.veontomo.callstatistics;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.net.Uri;
+import android.os.Bundle;
 import android.provider.CallLog;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import java.util.Date;
 
@@ -16,8 +22,32 @@ public class MainView extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_view);
+        setContentView(new MyView(this));
         calllog();
+    }
+
+    public class MyView extends View {
+        public MyView(Context context) {
+            super(context);
+            // TODO Auto-generated constructor stub
+        }
+
+        @Override
+        protected void onDraw(Canvas canvas) {
+            // TODO Auto-generated method stub
+            super.onDraw(canvas);
+            int x = getWidth();
+            int y = getHeight();
+            int radius;
+            radius = 100;
+            Paint paint = new Paint();
+            paint.setStyle(Paint.Style.FILL);
+            paint.setColor(Color.WHITE);
+            canvas.drawPaint(paint);
+            // Use Color.parseColor to define HTML colors
+            paint.setColor(Color.parseColor("#CD5C5C"));
+            canvas.drawCircle(x / 2, y / 2, radius, paint);
+        }
     }
 
 
@@ -43,14 +73,20 @@ public class MainView extends AppCompatActivity {
         int date = cursor.getColumnIndex(CallLog.Calls.DATE);
         int duration = cursor.getColumnIndex(CallLog.Calls.DURATION);
         int counter = 0;
+        String phNumber;
+        String callType;
+        String callDate;
+        Date callDayTime;
+        String callDuration;
+        String dir;
         while (cursor.moveToNext()) {
             counter++;
-            String phNumber = cursor.getString(number);
-            String callType = cursor.getString(type);
-            String callDate = cursor.getString(date);
-            Date callDayTime = new Date(Long.valueOf(callDate));
-            String callDuration = cursor.getString(duration);
-            String dir = null;
+            phNumber = cursor.getString(number);
+            callType = cursor.getString(type);
+            callDate = cursor.getString(date);
+            callDayTime = new Date(Long.valueOf(callDate));
+            callDuration = cursor.getString(duration);
+            dir = null;
             int dircode = Integer.parseInt(callType);
             switch (dircode) {
                 case CallLog.Calls.OUTGOING_TYPE:
@@ -70,4 +106,6 @@ public class MainView extends AppCompatActivity {
         }
         cursor.close();
     }
+
+
 }

@@ -33,11 +33,11 @@ public class Model {
     /**
      * Passes the prepared data to the presenter.
      *
-     * @param stat
+     * @param data
      */
-    private void onDataPrepared(ArrayList<Call> stat) {
+    private void onDataPrepared(DiagramData data) {
         if (mPresenter != null) {
-            mPresenter.loadData(stat);
+            mPresenter.loadData(data);
         }
     }
 

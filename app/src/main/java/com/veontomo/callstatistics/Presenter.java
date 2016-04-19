@@ -2,6 +2,8 @@ package com.veontomo.callstatistics;
 
 import android.content.Context;
 
+import java.util.ArrayList;
+
 /**
  * Presenter of MVP architecture
  */
@@ -43,7 +45,7 @@ public class Presenter {
      * Passes the data to the view
      * @param stat
      */
-    public void loadData(PhoneNumberStat stat) {
+    public void loadData(ArrayList<Call> stat) {
         if (this.mView != null){
             mView.loadData(stat);
         }

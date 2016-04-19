@@ -1,16 +1,11 @@
 package com.veontomo.callstatistics;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.provider.CallLog;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
-import java.util.Date;
+import java.util.ArrayList;
 
 public class MainView extends AppCompatActivity implements MVPView {
 
@@ -40,7 +35,7 @@ public class MainView extends AppCompatActivity implements MVPView {
         }
     }
 
-    public void loadData(PhoneNumberStat data) {
+    public void loadData(ArrayList<Call> data) {
         Log.i(Config.appName, "the view has received the data");
         if (mView != null) {
             mView.loadData(data);

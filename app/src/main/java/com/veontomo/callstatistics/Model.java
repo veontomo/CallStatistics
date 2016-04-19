@@ -8,7 +8,7 @@ import android.provider.CallLog;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
-import java.util.Date;
+import java.util.ArrayList;
 
 /**
  * Model of MVP architecture
@@ -26,7 +26,7 @@ public class Model {
      */
     public void prepareData() {
         Log.i(Config.appName, "the model has received a request to prepare the data");
-        PhoneNumberStat stat = phoneCallStat();
+        ArrayList<Call> stat = phoneCallStat();
         onDataPrepared(stat);
     }
 
@@ -35,20 +35,20 @@ public class Model {
      *
      * @param stat
      */
-    private void onDataPrepared(PhoneNumberStat stat) {
+    private void onDataPrepared(ArrayList<Call> stat) {
         if (mPresenter != null) {
             mPresenter.loadData(stat);
         }
     }
 
-    private PhoneNumberStat phoneCallStat() {
+    private ArrayList<Call> phoneCallStat() {
         final Context context = mPresenter.getAppContext();
         Log.i(Config.appName, "last call: " + CallLog.Calls.getLastOutgoingCall(context));
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
             Log.i(Config.appName, "no permissions");
             return null;
         }
-        PhoneNumberStat result = new PhoneNumberStat();
+        final ArrayList<Call> result = new ArrayList<>();
         Cursor cursor = context.getContentResolver().query(CallLog.Calls.CONTENT_URI, null, null, null, CallLog.Calls.DATE + " DESC");
         int number = cursor.getColumnIndex(CallLog.Calls.NUMBER);
         int type = cursor.getColumnIndex(CallLog.Calls.TYPE);

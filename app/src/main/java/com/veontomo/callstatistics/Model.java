@@ -44,15 +44,12 @@ public class Model {
     private PhoneNumberStat phoneCallStat() {
         final Context context = mPresenter.getAppContext();
         Log.i(Config.appName, "last call: " + CallLog.Calls.getLastOutgoingCall(context));
-        StringBuffer stringBuffer = new StringBuffer();
-        //if (checkPermission())
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
             Log.i(Config.appName, "no permissions");
             return null;
         }
         PhoneNumberStat result = new PhoneNumberStat();
-        Cursor cursor = context.getContentResolver().query(CallLog.Calls.CONTENT_URI,
-                null, null, null, CallLog.Calls.DATE + " DESC");
+        Cursor cursor = context.getContentResolver().query(CallLog.Calls.CONTENT_URI, null, null, null, CallLog.Calls.DATE + " DESC");
         int number = cursor.getColumnIndex(CallLog.Calls.NUMBER);
         int type = cursor.getColumnIndex(CallLog.Calls.TYPE);
         int date = cursor.getColumnIndex(CallLog.Calls.DATE);
@@ -61,33 +58,17 @@ public class Model {
         String phNumber;
         String callType;
         String callDate;
-        Date callDayTime;
         String callDuration;
-        String dir;
         while (cursor.moveToNext()) {
             counter++;
             phNumber = cursor.getString(number);
             callType = cursor.getString(type);
             callDate = cursor.getString(date);
-            callDayTime = new Date(Long.valueOf(callDate));
             callDuration = cursor.getString(duration);
-            dir = null;
-            int dircode = Integer.parseInt(callType);
-            switch (dircode) {
-                case CallLog.Calls.OUTGOING_TYPE:
-                    dir = "OUTGOING";
-                    break;
-                case CallLog.Calls.INCOMING_TYPE:
-                    dir = "INCOMING";
-                    break;
+            Call c = new Call(phNumber, callType, Integer.parseInt(callType), Integer.parseInt(callDuration), Long.valueOf(callDate));
+            Log.i(Config.appName, String.valueOf(counter) + ": " + c.toString());
+            result.add(c);
 
-                case CallLog.Calls.MISSED_TYPE:
-                    dir = "MISSED";
-                    break;
-            }
-            Log.i(Config.appName, String.valueOf(counter));
-            Log.i(Config.appName, "Phone Number:--- " + phNumber + " \nCall Type:--- " + dir + " \nCall Date:--- " + callDayTime
-                    + " \nCall duration in sec :--- " + callDuration);
         }
         cursor.close();
         return result;

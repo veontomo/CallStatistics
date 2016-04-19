@@ -1,10 +1,21 @@
 package com.veontomo.callstatistics;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Phone numbers' frequencies
  */
 public class PhoneNumberStat {
+
+    private List<Call> items;
+
+    public PhoneNumberStat() {
+        this.items = new ArrayList<>();
+    }
+
     /**
+
      * Gets the maximum among the values
      *
      * @return
@@ -62,4 +73,9 @@ public class PhoneNumberStat {
     }
 
 
+    public void add(Call c) {
+        items.add(c);
+
+
+    }
 }

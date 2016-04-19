@@ -11,6 +11,6 @@ public interface MVPView {
 
     void onDataRequested(View v);
 
-    void loadData(ArrayList<Call> data);
+    void loadData(DiagramData data);
 
 }

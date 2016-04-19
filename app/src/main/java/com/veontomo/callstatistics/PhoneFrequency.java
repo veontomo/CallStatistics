@@ -1,10 +1,10 @@
 package com.veontomo.callstatistics;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Diagram data that shows how often a phone number occurs in phone call registry.
- *
  */
 public class PhoneFrequency implements DiagramData {
 
@@ -13,9 +13,31 @@ public class PhoneFrequency implements DiagramData {
      */
     private final int mSize;
 
-    public PhoneFrequency(ArrayList<Call> data) {
-        /// TODO: implements this method
-        this.mSize = 0;
+    private String[] xValues;
+
+    private Float[] yValues;
+
+    public PhoneFrequency(final ArrayList<Call> data) {
+        List<String> x = new ArrayList<>();
+        List<Float> y = new ArrayList<>();
+        int pos;
+        float yTmp;
+        for (Call c : data) {
+            if (x.contains(c.callNumber)) {
+                pos = x.indexOf(c.callNumber);
+                yTmp = y.get(pos);
+                y.set(pos, yTmp + 1);
+            } else {
+                x.add(c.callNumber);
+                y.add(1f);
+            }
+        }
+        mSize = x.size();
+        xValues = new String[mSize];
+        xValues = x.toArray(xValues);
+        yValues = new Float[mSize];
+        yValues = y.toArray(yValues);
+
     }
 
     /**
@@ -36,7 +58,7 @@ public class PhoneFrequency implements DiagramData {
      */
     @Override
     public String getX(int i) {
-        return null;
+        return xValues[i];
     }
 
     /**
@@ -47,6 +69,6 @@ public class PhoneFrequency implements DiagramData {
      */
     @Override
     public float getY(int i) {
-        return 0;
+        return yValues[i];
     }
 }

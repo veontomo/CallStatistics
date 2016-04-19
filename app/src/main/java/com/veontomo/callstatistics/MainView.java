@@ -35,7 +35,7 @@ public class MainView extends AppCompatActivity implements MVPView {
         }
     }
 
-    public void loadData(ArrayList<Call> data) {
+    public void loadData(DiagramData data) {
         Log.i(Config.appName, "the view has received the data");
         if (mView != null) {
             mView.loadData(data);

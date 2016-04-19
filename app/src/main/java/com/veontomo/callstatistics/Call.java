@@ -4,11 +4,11 @@ package com.veontomo.callstatistics;
  * Collects phone call numbers.
  */
 public class Call {
-    private final String callNumber;
-    private final String callType;
-    private final int direction;
-    private final int duration;
-    private final long time;
+    public final String callNumber;
+    public final String callType;
+    public final int direction;
+    public final int duration;
+    public final long time;
 
     public Call(String callNumber, String callType, int direction, int duration, long time) {
         this.callNumber = callNumber;

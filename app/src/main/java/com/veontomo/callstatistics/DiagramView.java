@@ -17,7 +17,7 @@ import java.util.Random;
  * http://developer.android.com/intl/ru/training/custom-views/index.html
  */
 public class DiagramView extends View {
-    private ArrayList<Call> mData;
+    private DiagramData mData;
 
     private float width = 0;
     private float height = 0;
@@ -43,7 +43,7 @@ public class DiagramView extends View {
     }
 
 
-    public void loadData(ArrayList<Call> data) {
+    public void loadData(DiagramData data) {
         Log.i(Config.appName, "loading data");
         this.mData = data;
         invalidate();
@@ -63,21 +63,20 @@ public class DiagramView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         Log.i(Config.appName, "drawing");
-//        if (mData == null){
-//            return;
-//        }
+        if (mData == null) {
+            return;
+        }
         Paint p;
 
-//        int N = mData.size();
-//        if (N  == 0) {
-//            return;
-//        }
-        int N = 20;
-        float barWidth = width / N;
+        final int mDataSize = mData.getSize();
+        if (mDataSize == 0) {
+            return;
+        }
+        float barWidth = width / mDataSize;
         Random rndGenerator = new Random();
-        for (int i = 0; i < N; i++) {
+        for (int i = 0; i < mDataSize; i++) {
             p = (rndGenerator.nextFloat() > 0.5f) ? painter1 : painter2;
-            float h = height * rndGenerator.nextFloat();
+            float h = mData.getY(i);
             canvas.drawRect(i * barWidth, height, (i + 1) * barWidth - 1, height - h, p);
         }
 

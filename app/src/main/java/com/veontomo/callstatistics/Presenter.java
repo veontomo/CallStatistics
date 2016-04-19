@@ -45,7 +45,7 @@ public class Presenter {
      * Passes the data to the view
      * @param stat
      */
-    public void loadData(ArrayList<Call> stat) {
+    public void loadData(DiagramData stat) {
         if (this.mView != null){
             mView.loadData(stat);
         }

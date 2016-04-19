@@ -26,8 +26,8 @@ public class Model {
      */
     public void prepareData() {
         Log.i(Config.appName, "the model has received a request to prepare the data");
-        ArrayList<Call> stat = phoneCallStat();
-        onDataPrepared(stat);
+        PhoneFrequency freq = new PhoneFrequency(phoneCallStat());
+        onDataPrepared(freq);
     }
 
     /**

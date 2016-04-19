@@ -9,6 +9,6 @@ public interface MVPView {
 
     void onDataRequested(View v);
 
-    void loadData(StatisticsData data);
+    void loadData(PhoneNumberStat data);
 
 }

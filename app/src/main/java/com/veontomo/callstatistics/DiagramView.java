@@ -16,7 +16,7 @@ import java.util.Random;
  * http://developer.android.com/intl/ru/training/custom-views/index.html
  */
 public class DiagramView extends View {
-    private StatisticsData mData;
+    private PhoneNumberStat mData;
 
     private float width = 0;
     private float height = 0;
@@ -42,7 +42,7 @@ public class DiagramView extends View {
     }
 
 
-    public void loadData(StatisticsData data) {
+    public void loadData(PhoneNumberStat data) {
         Log.i(Config.appName, "loading data");
         this.mData = data;
         invalidate();

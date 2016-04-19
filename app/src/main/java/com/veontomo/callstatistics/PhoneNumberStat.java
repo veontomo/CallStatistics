@@ -3,13 +3,12 @@ package com.veontomo.callstatistics;
 /**
  * Phone numbers' frequencies
  */
-public class PhoneNumberStat implements StatisticsData<String, Float> {
+public class PhoneNumberStat {
     /**
      * Gets the maximum among the values
      *
      * @return
      */
-    @Override
     public Float getMax() {
         return null;
     }
@@ -19,7 +18,6 @@ public class PhoneNumberStat implements StatisticsData<String, Float> {
      *
      * @return
      */
-    @Override
     public Float getMin() {
         return null;
     }
@@ -30,7 +28,6 @@ public class PhoneNumberStat implements StatisticsData<String, Float> {
      * @param aFloat
      * @return
      */
-    @Override
     public float toFloat(Float aFloat) {
         return 0;
     }
@@ -40,7 +37,6 @@ public class PhoneNumberStat implements StatisticsData<String, Float> {
      *
      * @return
      */
-    @Override
     public int getSize() {
         return 0;
     }
@@ -51,7 +47,6 @@ public class PhoneNumberStat implements StatisticsData<String, Float> {
      * @param i
      * @return
      */
-    @Override
     public String getKey(int i) {
         return null;
     }
@@ -62,7 +57,6 @@ public class PhoneNumberStat implements StatisticsData<String, Float> {
      * @param i
      * @return
      */
-    @Override
     public Float getValue(int i) {
         return null;
     }

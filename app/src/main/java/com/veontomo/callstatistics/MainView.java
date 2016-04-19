@@ -40,7 +40,7 @@ public class MainView extends AppCompatActivity implements MVPView {
         }
     }
 
-    public void loadData(StatisticsData data) {
+    public void loadData(PhoneNumberStat data) {
         Log.i(Config.appName, "the view has received the data");
         if (mView != null) {
             mView.loadData(data);

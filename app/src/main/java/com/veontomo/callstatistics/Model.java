@@ -26,10 +26,8 @@ public class Model {
      */
     public void prepareData() {
         Log.i(Config.appName, "the model has received a request to prepare the data");
-        PhoneNumberStat stat = new PhoneNumberStat();
+        PhoneNumberStat stat = phoneCallStat();
         onDataPrepared(stat);
-        calllog();
-
     }
 
     /**
@@ -43,22 +41,16 @@ public class Model {
         }
     }
 
-    private void calllog() {
+    private PhoneNumberStat phoneCallStat() {
         final Context context = mPresenter.getAppContext();
         Log.i(Config.appName, "last call: " + CallLog.Calls.getLastOutgoingCall(context));
         StringBuffer stringBuffer = new StringBuffer();
         //if (checkPermission())
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             Log.i(Config.appName, "no permissions");
-            return;
+            return null;
         }
+        PhoneNumberStat result = new PhoneNumberStat();
         Cursor cursor = context.getContentResolver().query(CallLog.Calls.CONTENT_URI,
                 null, null, null, CallLog.Calls.DATE + " DESC");
         int number = cursor.getColumnIndex(CallLog.Calls.NUMBER);
@@ -98,5 +90,7 @@ public class Model {
                     + " \nCall duration in sec :--- " + callDuration);
         }
         cursor.close();
+        return result;
     }
+
 }

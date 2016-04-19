@@ -9,21 +9,17 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
-import java.util.ArrayList;
-import java.util.Random;
-
 /**
  * A view to show a diagram
  * http://developer.android.com/intl/ru/training/custom-views/index.html
  */
 public class DiagramView extends View {
+    private final int[] colors = new int[]{
+            Color.BLACK, Color.BLUE, Color.CYAN, Color.DKGRAY, Color.GRAY, Color.GREEN, Color.LTGRAY, Color.MAGENTA, Color.RED, Color.TRANSPARENT, Color.WHITE, Color.YELLOW};
     private DiagramData mData;
-
     private float width = 0;
     private float height = 0;
-    private Paint painter1 = new Paint();
-    private Paint painter2 = new Paint();
-
+    private Paint painter = new Paint();
 
     public DiagramView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -31,8 +27,6 @@ public class DiagramView extends View {
                 attrs,
                 R.styleable.DiagramView,
                 0, 0);
-        painter1.setColor(Color.BLUE);
-        painter2.setColor(Color.RED);
 
         try {
             /// TODO: find out whether I need the typed array.
@@ -73,11 +67,12 @@ public class DiagramView extends View {
             return;
         }
         float barWidth = width / mDataSize;
-        Random rndGenerator = new Random();
+        float h;
+        int colorSize = colors.length;
         for (int i = 0; i < mDataSize; i++) {
-            p = (rndGenerator.nextFloat() > 0.5f) ? painter1 : painter2;
-            float h = mData.getY(i);
-            canvas.drawRect(i * barWidth, height, (i + 1) * barWidth - 1, height - h, p);
+            h = mData.getY(i);
+            painter.setColor(colors[i % colorSize]);
+            canvas.drawRect(i * barWidth, height, (i + 1) * barWidth - 1, height - h, painter);
         }
 
     }

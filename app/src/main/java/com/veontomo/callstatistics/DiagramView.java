@@ -57,7 +57,7 @@ public class DiagramView extends View {
     }
 
 
-    public void loadData() {
+    public void loadData(StatisticsData data) {
         Log.i(Config.appName, "loading data");
         invalidate();
         requestLayout();

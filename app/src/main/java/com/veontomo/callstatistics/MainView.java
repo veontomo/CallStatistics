@@ -12,14 +12,18 @@ import android.view.View;
 
 import java.util.Date;
 
-public class MainView extends AppCompatActivity {
+public class MainView extends AppCompatActivity implements MVPView {
 
     private DiagramView mView;
+
+    private Presenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_view);
+
+        mPresenter = Presenter.create(this);
         calllog();
         mView = (DiagramView) findViewById(R.id.diagramView);
     }
@@ -27,12 +31,21 @@ public class MainView extends AppCompatActivity {
 
     /**
      * Loads data into the diagram view
+     *
      * @param v
      */
-    public void loadData(View v){
-        if (mView != null){
-            mView.loadData();
+    public void onDataRequested(View v) {
+        if (mPresenter != null){
+            mPresenter.requestData();
         }
+    }
+
+    public void loadData(StatisticsData data) {
+        Log.i(Config.appName, "the view has received the data");
+        if (mView != null) {
+            mView.loadData(data);
+        }
+
     }
 
 

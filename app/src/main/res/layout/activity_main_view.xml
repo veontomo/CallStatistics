@@ -26,6 +26,6 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="update"
+        android:onClick="loadData"
         android:text="Update"/>
 </LinearLayout>

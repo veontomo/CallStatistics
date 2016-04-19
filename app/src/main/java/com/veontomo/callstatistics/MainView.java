@@ -25,8 +25,11 @@ public class MainView extends AppCompatActivity {
     }
 
 
-
-    public void update(View v){
+    /**
+     * Loads data into the diagram view
+     * @param v
+     */
+    public void loadData(View v){
         if (mView != null){
             mView.loadData();
         }

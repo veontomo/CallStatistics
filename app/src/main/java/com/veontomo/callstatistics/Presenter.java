@@ -1,5 +1,7 @@
 package com.veontomo.callstatistics;
 
+import android.content.Context;
+
 /**
  * Presenter of MVP architecture
  */
@@ -7,6 +9,10 @@ public class Presenter {
 
     private Model mModel;
     private final MVPView mView;
+    /**
+     * application context
+     */
+    private Context mAppContext;
 
     public Presenter(MVPView view) {
         mView = view;
@@ -42,5 +48,17 @@ public class Presenter {
             mView.loadData(stat);
         }
 
+    }
+
+    /**
+     * Application context setter
+     * @param appContext
+     */
+    public void setAppContext(final Context appContext) {
+        mAppContext = appContext;
+    }
+
+    public Context getAppContext(){
+        return mAppContext;
     }
 }

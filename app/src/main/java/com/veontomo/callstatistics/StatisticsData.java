@@ -27,4 +27,25 @@ public interface StatisticsData<T, K> {
      */
     float toFloat(K k);
 
+    /**
+     * Returns the number of key-value pairs
+     * @return
+     */
+    int getSize();
+
+
+    /**
+     * Returns a key of the i-th element
+     * @param i
+     * @return
+     */
+    T getKey(int i);
+
+    /**
+     * Returns a value of the i-th element
+     * @param i
+     * @return
+     */
+    K getValue(int i);
+
 }

@@ -34,4 +34,38 @@ public class PhoneNumberStat implements StatisticsData<String, Float> {
     public float toFloat(Float aFloat) {
         return 0;
     }
+
+    /**
+     * Returns the number of key-value pairs
+     *
+     * @return
+     */
+    @Override
+    public int getSize() {
+        return 0;
+    }
+
+    /**
+     * Returns
+     *
+     * @param i
+     * @return
+     */
+    @Override
+    public String getKey(int i) {
+        return null;
+    }
+
+    /**
+     * Returns a value of the i-th element
+     *
+     * @param i
+     * @return
+     */
+    @Override
+    public Float getValue(int i) {
+        return null;
+    }
+
+
 }

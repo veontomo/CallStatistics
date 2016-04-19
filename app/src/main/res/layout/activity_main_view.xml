@@ -20,12 +20,12 @@
     <com.veontomo.callstatistics.DiagramView
         android:id="@+id/diagramView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         custom:name="sss"/>
 
-
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Legend"/>
+        android:onClick="update"
+        android:text="Update"/>
 </LinearLayout>

@@ -1,13 +1,8 @@
 package com.veontomo.callstatistics;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CallLog;
 import android.support.v4.app.ActivityCompat;
@@ -19,19 +14,22 @@ import java.util.Date;
 
 public class MainView extends AppCompatActivity {
 
+    private DiagramView mView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_view);
         calllog();
-        updateCustomView();
+        mView = (DiagramView) findViewById(R.id.diagramView);
     }
 
-    private void updateCustomView() {
-        DiagramView mView = (DiagramView) findViewById(R.id.diagramView);
-        mView.setText("dynimically generated text");
 
 
+    public void update(View v){
+        if (mView != null){
+            mView.loadData();
+        }
     }
 
 

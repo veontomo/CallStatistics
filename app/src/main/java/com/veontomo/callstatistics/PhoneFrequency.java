@@ -27,12 +27,16 @@ public class PhoneFrequency implements DiagramData {
         int pos;
         int newPos;
         float freq;
+        if (data == null){
+            mSize = 0;
+            return;
+        }
         for (Call c : data) {
             if (x.contains(c.callNumber)) {
                 pos = x.indexOf(c.callNumber);
                 freq = y.get(pos) + 1;
                 y.set(pos, freq);
-                newPos = findPos(pos, y);
+                newPos = findNewPosition(pos, y);
                 if (newPos != pos) {
                     String xVal = x.remove(pos);
                     float yVal = y.remove(pos);
@@ -69,7 +73,7 @@ public class PhoneFrequency implements DiagramData {
      * @param pos  position of the element due to which the list is not sorted.
      * @param data list of float in almost decreasing order apart from possible one element
      */
-    public int findPos(int pos, final List<Float> data) {
+    public int findNewPosition(int pos, final List<Float> data) {
         float value = data.get(pos);
         int newPos = pos - 1;
         while (newPos >= 0 && value > data.get(newPos)) {
@@ -78,20 +82,6 @@ public class PhoneFrequency implements DiagramData {
         return newPos + 1;
 
 
-    }
-
-    /**
-     * Adjust the lists x, y in such a way that x is sorted in decreasing order while maintaining
-     * initial relationship with list y.
-     * Constraint: if the element at position pos is thrown away, then list y is sorted in decreasing order.
-     *
-     * @param pos
-     */
-    public void adjust(int posNew, int pos,  List<String> x, List<Float> y) {
-        String xVal = x.remove(pos);
-        float yVal = y.remove(pos);
-        x.add(posNew, xVal);
-        y.add(posNew, yVal);
     }
 
     /**

@@ -109,28 +109,28 @@ public class PhoneFrequencyTest {
 
     @Test
     public void testFindPosition3To0(){
-        PhoneFrequency diagram = new PhoneFrequency(new ArrayList<Call>());
+        PhoneFrequency diagram = new PhoneFrequency(null);
         List<Float> data = new ArrayList<>(Arrays.asList(new Float[]{2f, 2f, 2f, 3f}));
-        assertEquals(0, diagram.findPos(3, data));
+        assertEquals(0, diagram.findNewPosition(3, data));
     }
 
     @Test
     public void testFindPosition4To2(){
-        PhoneFrequency diagram = new PhoneFrequency(new ArrayList<Call>());
+        PhoneFrequency diagram = new PhoneFrequency(null);
         List<Float> data = new ArrayList<>(Arrays.asList(new Float[]{5f, 4f, 2f, 2f, 3f, 1f}));
-        assertEquals(2, diagram.findPos(4, data));
+        assertEquals(2, diagram.findNewPosition(4, data));
     }
 
     @Test
     public void testFindPosition3To3(){
-        PhoneFrequency diagram = new PhoneFrequency(new ArrayList<Call>());
+        PhoneFrequency diagram = new PhoneFrequency(null);
         List<Float> data = new ArrayList<>(Arrays.asList(new Float[]{3f, 3f, 3f, 3f, 2f}));
-        assertEquals(3, diagram.findPos(3, data));
+        assertEquals(3, diagram.findNewPosition(3, data));
     }
     @Test
     public void testFindPosition3To1(){
-        PhoneFrequency diagram = new PhoneFrequency(new ArrayList<Call>());
+        PhoneFrequency diagram = new PhoneFrequency(null);
         List<Float> data = new ArrayList<>(Arrays.asList(new Float[]{3f, 2f, 2f, 3f, 1f}));
-        assertEquals(1, diagram.findPos(3, data));
+        assertEquals(1, diagram.findNewPosition(3, data));
     }
 }

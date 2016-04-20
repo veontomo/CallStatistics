@@ -74,6 +74,7 @@ public class DiagramView extends View {
         }
         float barWidth = width / mDataSize;
         Random rndGenerator = new Random();
+        Log.i(Config.appName, "max: " + mData.getMax() + ", min: " + mData.getMin());
         for (int i = 0; i < mDataSize; i++) {
             p = (rndGenerator.nextFloat() > 0.5f) ? painter1 : painter2;
             float h = mData.getY(i);

@@ -23,4 +23,18 @@ public interface DiagramData {
      * @return
      */
     float getY(int i);
+
+    /**
+     * Returns the maximal of y-values
+     * @return
+     */
+    float getMax();
+
+
+    /**
+     * Returns the minimal of y-values
+     * @return
+     */
+    float getMin();
+
 }

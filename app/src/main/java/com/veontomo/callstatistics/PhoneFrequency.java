@@ -21,7 +21,7 @@ public class PhoneFrequency implements DiagramData {
 
     private Float yMin = null;
 
-    public PhoneFrequency(final ArrayList<Call> data) {
+    public PhoneFrequency(final List<Call> data) {
         List<String> x = new ArrayList<>();
         List<Float> y = new ArrayList<>();
         int pos;
@@ -31,6 +31,7 @@ public class PhoneFrequency implements DiagramData {
                 pos = x.indexOf(c.callNumber);
                 freq = y.get(pos) + 1;
                 y.set(pos, freq);
+                adjust(pos, x, y);
             } else {
                 freq = 1f;
                 x.add(c.callNumber);
@@ -50,6 +51,27 @@ public class PhoneFrequency implements DiagramData {
         yValues = new Float[mSize];
         yValues = y.toArray(yValues);
 
+    }
+
+    /**
+     * Adjust the lists x, y in such a way that x is sorted in decreasing order while maintaining
+     * initial relationship with list y.
+     * Constraint: if the element at position pos is thrown away, then list y is sorted in decreasing order.
+     *
+     * @param pos
+     */
+    private void adjust(int pos, List<String> x, List<Float> y) {
+        String xVal = x.remove(pos);
+        float yVal = y.remove(pos);
+        int newPos = pos - 1;
+        while (newPos >= 0 && yVal > y.get(newPos)){
+            newPos--;
+        }
+        if (newPos == -1){
+            newPos = 0;
+        }
+        x.add(newPos, xVal);
+        y.add(newPos, yVal);
     }
 
     /**

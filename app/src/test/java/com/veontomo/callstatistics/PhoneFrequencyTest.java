@@ -105,24 +105,7 @@ public class PhoneFrequencyTest {
         assertEquals(1, (int) diagram.getY(1));
     }
 
-    @Test
-    public void testAdjustLastElement(){
-        PhoneFrequency diagram = new PhoneFrequency(new ArrayList<Call>());
-        List<String> x = new ArrayList<>(Arrays.asList(new String[]{"a", "b", "c", "d"}));
-        List<Float> y = new ArrayList<>(Arrays.asList(new Float[]{2f, 2f, 2f, 3f}));
-        diagram.adjust(3, x, y);
-        assertTrue(true);
-        assertEquals(4, x.size());
-        assertEquals(4, x.size());
-        assertEquals("d", x.get(0));
-        assertEquals(3f, y.get(0), 0.01);
-        assertEquals("a", x.get(1));
-        assertEquals(2f, y.get(1), 0.01);
-        assertEquals("b", x.get(2));
-        assertEquals(2f, y.get(2), 0.01);
-        assertEquals("c", x.get(3));
-        assertEquals(2f, y.get(3), 0.01);
-    }
+
 
     @Test
     public void testFindPosition3To0(){

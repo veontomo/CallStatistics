@@ -25,14 +25,20 @@ public class PhoneFrequency implements DiagramData {
         List<String> x = new ArrayList<>();
         List<Float> y = new ArrayList<>();
         int pos;
+        int newPos;
         float freq;
         for (Call c : data) {
             if (x.contains(c.callNumber)) {
                 pos = x.indexOf(c.callNumber);
                 freq = y.get(pos) + 1;
                 y.set(pos, freq);
-                findPos(pos, y);
-                adjust(pos, x, y);
+                newPos = findPos(pos, y);
+                if (newPos != pos) {
+                    String xVal = x.remove(pos);
+                    float yVal = y.remove(pos);
+                    x.add(newPos, xVal);
+                    y.add(newPos, yVal);
+                }
             } else {
                 freq = 1f;
                 x.add(c.callNumber);
@@ -81,18 +87,11 @@ public class PhoneFrequency implements DiagramData {
      *
      * @param pos
      */
-    public void adjust(int pos, List<String> x, List<Float> y) {
+    public void adjust(int posNew, int pos,  List<String> x, List<Float> y) {
         String xVal = x.remove(pos);
         float yVal = y.remove(pos);
-        int newPos = pos - 1;
-        while (newPos >= 0 && yVal > y.get(newPos)) {
-            newPos--;
-        }
-        if (newPos == -1) {
-            newPos = 0;
-        }
-        x.add(newPos, xVal);
-        y.add(newPos, yVal);
+        x.add(posNew, xVal);
+        y.add(posNew, yVal);
     }
 
     /**

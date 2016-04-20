@@ -1,6 +1,7 @@
 package com.veontomo.callstatistics;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -143,7 +144,13 @@ public class PhoneFrequency implements DiagramData {
      */
     @Override
     public void truncate(int cutoff) {
-
+        int index = findSmallerThan(cutoff, yValues);
+        if (index < mSize) {
+            mSize = index;
+            xValues = Arrays.copyOfRange(xValues, 0, mSize);
+            yValues = Arrays.copyOfRange(yValues, 0, mSize);
+            yMin = yValues[mSize-1];
+        }
     }
 
 

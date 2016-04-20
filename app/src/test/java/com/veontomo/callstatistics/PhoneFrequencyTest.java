@@ -3,6 +3,7 @@ package com.veontomo.callstatistics;
 import org.junit.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -102,5 +103,51 @@ public class PhoneFrequencyTest {
         PhoneFrequency diagram = new PhoneFrequency(data);
         assertEquals(2, (int) diagram.getY(0));
         assertEquals(1, (int) diagram.getY(1));
+    }
+
+    @Test
+    public void testAdjustLastElement(){
+        PhoneFrequency diagram = new PhoneFrequency(new ArrayList<Call>());
+        List<String> x = new ArrayList<>(Arrays.asList(new String[]{"a", "b", "c", "d"}));
+        List<Float> y = new ArrayList<>(Arrays.asList(new Float[]{2f, 2f, 2f, 3f}));
+        diagram.adjust(3, x, y);
+        assertTrue(true);
+        assertEquals(4, x.size());
+        assertEquals(4, x.size());
+        assertEquals("d", x.get(0));
+        assertEquals(3f, y.get(0), 0.01);
+        assertEquals("a", x.get(1));
+        assertEquals(2f, y.get(1), 0.01);
+        assertEquals("b", x.get(2));
+        assertEquals(2f, y.get(2), 0.01);
+        assertEquals("c", x.get(3));
+        assertEquals(2f, y.get(3), 0.01);
+    }
+
+    @Test
+    public void testFindPosition3To0(){
+        PhoneFrequency diagram = new PhoneFrequency(new ArrayList<Call>());
+        List<Float> data = new ArrayList<>(Arrays.asList(new Float[]{2f, 2f, 2f, 3f}));
+        assertEquals(0, diagram.findPos(3, data));
+    }
+
+    @Test
+    public void testFindPosition4To2(){
+        PhoneFrequency diagram = new PhoneFrequency(new ArrayList<Call>());
+        List<Float> data = new ArrayList<>(Arrays.asList(new Float[]{5f, 4f, 2f, 2f, 3f, 1f}));
+        assertEquals(2, diagram.findPos(4, data));
+    }
+
+    @Test
+    public void testFindPosition3To3(){
+        PhoneFrequency diagram = new PhoneFrequency(new ArrayList<Call>());
+        List<Float> data = new ArrayList<>(Arrays.asList(new Float[]{3f, 3f, 3f, 3f, 2f}));
+        assertEquals(3, diagram.findPos(3, data));
+    }
+    @Test
+    public void testFindPosition3To1(){
+        PhoneFrequency diagram = new PhoneFrequency(new ArrayList<Call>());
+        List<Float> data = new ArrayList<>(Arrays.asList(new Float[]{3f, 2f, 2f, 3f, 1f}));
+        assertEquals(1, diagram.findPos(3, data));
     }
 }

@@ -31,6 +31,7 @@ public class PhoneFrequency implements DiagramData {
                 pos = x.indexOf(c.callNumber);
                 freq = y.get(pos) + 1;
                 y.set(pos, freq);
+                findPos(pos, y);
                 adjust(pos, x, y);
             } else {
                 freq = 1f;
@@ -54,20 +55,40 @@ public class PhoneFrequency implements DiagramData {
     }
 
     /**
+     * Finds a  position at which the element with index pos, must be at.
+     * All elements apart from the one at position pos, are sorted in a decreasing order.
+     * The aim is to find a proper place for that element in such a way that ALL elements
+     * are sorted in decreasing order.
+     *
+     * @param pos  position of the element due to which the list is not sorted.
+     * @param data list of float in almost decreasing order apart from possible one element
+     */
+    public int findPos(int pos, final List<Float> data) {
+        float value = data.get(pos);
+        int newPos = pos - 1;
+        while (newPos >= 0 && value > data.get(newPos)) {
+            newPos--;
+        }
+        return newPos + 1;
+
+
+    }
+
+    /**
      * Adjust the lists x, y in such a way that x is sorted in decreasing order while maintaining
      * initial relationship with list y.
      * Constraint: if the element at position pos is thrown away, then list y is sorted in decreasing order.
      *
      * @param pos
      */
-    private void adjust(int pos, List<String> x, List<Float> y) {
+    public void adjust(int pos, List<String> x, List<Float> y) {
         String xVal = x.remove(pos);
         float yVal = y.remove(pos);
         int newPos = pos - 1;
-        while (newPos >= 0 && yVal > y.get(newPos)){
+        while (newPos >= 0 && yVal > y.get(newPos)) {
             newPos--;
         }
-        if (newPos == -1){
+        if (newPos == -1) {
             newPos = 0;
         }
         x.add(newPos, xVal);

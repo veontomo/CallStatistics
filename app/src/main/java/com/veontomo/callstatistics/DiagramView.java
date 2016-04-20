@@ -3,7 +3,6 @@ package com.veontomo.callstatistics;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -14,12 +13,18 @@ import android.view.View;
  * http://developer.android.com/intl/ru/training/custom-views/index.html
  */
 public class DiagramView extends View {
-    private final int[] colors = new int[]{
-            Color.BLACK, Color.BLUE, Color.CYAN, Color.DKGRAY, Color.GRAY, Color.GREEN, Color.LTGRAY, Color.MAGENTA, Color.RED, Color.TRANSPARENT, Color.WHITE, Color.YELLOW};
+    private final int[] colorCodes = new int[]{0xffd32f2f, 0xff388e3c, 0xff512da8, 0xfffbc02d, 0xff00796b, 0xffafb42b,  0xfff57c00, 0xff303f9f, 0xff455a64};
+
     private DiagramData mData;
+
     private float width = 0;
     private float height = 0;
     private Paint painter = new Paint();
+    /**
+     * Data which y-value is below this value are to ignored.
+     */
+    private float mCutOff;
+
 
     public DiagramView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -36,10 +41,19 @@ public class DiagramView extends View {
 
     }
 
-
+    /**
+     * Loads the data to visualize
+     * @param data
+     */
     public void loadData(DiagramData data) {
         Log.i(Config.appName, "loading data");
         this.mData = data;
+        invalidate();
+        requestLayout();
+    }
+
+    public void setCutOff(float cutoff){
+        this.mCutOff = cutoff;
         invalidate();
         requestLayout();
     }
@@ -62,16 +76,18 @@ public class DiagramView extends View {
         }
         Paint p;
 
-        final int mDataSize = mData.getSize();
+        final int mDataSize = 20; //mData.getSize();
         if (mDataSize == 0) {
             return;
         }
         float barWidth = width / mDataSize;
+        float scale = height / mData.getMax();
         float h;
-        int colorSize = colors.length;
+        int colorCodesSize = colorCodes.length;
+        Log.i(Config.appName, "max: " + mData.getMax() + ", min: " + mData.getMin());
         for (int i = 0; i < mDataSize; i++) {
-            h = mData.getY(i);
-            painter.setColor(colors[i % colorSize]);
+            h = scale * mData.getY(i);
+            painter.setColor(colorCodes[i % colorCodesSize]);
             canvas.drawRect(i * barWidth, height, (i + 1) * barWidth - 1, height - h, painter);
         }
 

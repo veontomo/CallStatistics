@@ -158,6 +158,12 @@ public class PhoneFrequency implements DiagramData {
     public int findSmallerThan(int needle, Integer[] data) {
         int leftBound = 0;
         int rightBound = data.length - 1;
+        if (data[leftBound] < needle) {
+            return 0;
+        }
+        if (data[rightBound] > needle) {
+            return rightBound + 1;
+        }
         int pointer = (leftBound + rightBound) / 2;
         float value;
         while (rightBound - leftBound > 1) {
@@ -176,19 +182,21 @@ public class PhoneFrequency implements DiagramData {
             return rightBound;
         }
         if (data[leftBound] == data[rightBound]) {
-
-            return leftBound;
-        }
-        if (data[leftBound] == needle) {
-            return leftBound + 1;
-        }
-        if (data[rightBound] > needle){
             return rightBound + 1;
         }
-        if (data[rightBound] == needle){
+        if (data[rightBound] == needle) {
+            return rightBound + 1;
+        }
+        if (data[leftBound] >= needle) {
             return rightBound;
         }
-        return leftBound;
+        if (data[rightBound] > needle) {
+            return rightBound + 1;
+        }
+        if (data[rightBound] == needle) {
+            return rightBound;
+        }
+        return leftBound + 1;
     }
 
 }

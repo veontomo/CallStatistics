@@ -100,8 +100,8 @@ public class PhoneFrequencyTest {
         data.add(c2);
         data.add(c3);
         PhoneFrequency diagram = new PhoneFrequency(data);
-        assertEquals(2, (int) diagram.getY(0));
-        assertEquals(1, (int) diagram.getY(1));
+        assertEquals(2, diagram.getY(0));
+        assertEquals(1, diagram.getY(1));
     }
 
 

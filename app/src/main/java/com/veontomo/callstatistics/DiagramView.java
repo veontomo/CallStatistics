@@ -3,7 +3,6 @@ package com.veontomo.callstatistics;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -14,7 +13,7 @@ import android.view.View;
  * http://developer.android.com/intl/ru/training/custom-views/index.html
  */
 public class DiagramView extends View {
-    private final int[] colorCodes = new int[]{Color.BLACK, Color.BLUE, Color.CYAN, Color.DKGRAY, Color.GRAY, Color.GREEN, Color.LTGRAY, Color.MAGENTA, Color.RED, Color.YELLOW};
+    private final int[] colorCodes = new int[]{0xffd32f2f, 0xff388e3c, 0xff512da8, 0xfffbc02d, 0xff00796b, 0xffafb42b,  0xfff57c00, 0xff303f9f, 0xff455a64};
 
     private DiagramData mData;
 

@@ -37,4 +37,10 @@ public interface DiagramData {
      */
     float getMin();
 
+    /**
+     * Removes the elements whose y-value is less than given cutoff.
+     * @param cutoff
+     */
+    void truncate(float cutoff);
+
 }

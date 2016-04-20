@@ -11,7 +11,7 @@ public class PhoneFrequency implements DiagramData {
     /**
      * number of elements in the diagram data
      */
-    private final int mSize;
+    private int mSize;
 
     private String[] xValues;
 
@@ -27,7 +27,7 @@ public class PhoneFrequency implements DiagramData {
         int pos;
         int newPos;
         float freq;
-        if (data == null){
+        if (data == null) {
             mSize = 0;
             return;
         }
@@ -135,4 +135,45 @@ public class PhoneFrequency implements DiagramData {
     public float getMin() {
         return yMin;
     }
+
+    /**
+     * Removes the elements whose y-value is less than given cutoff.
+     *
+     * @param cutoff
+     */
+    @Override
+    public void truncate(float cutoff) {
+
+    }
+
+
+    /**
+     * Returns the index of the element starting from which all elements have y-value less than the
+     * cutoff.
+     *
+     * @param needle
+     * @param data   sorted list in decreasing order.
+     * @return
+     */
+    public int findSmallerThan(float needle, Float[] data) {
+        int leftBound = 0;
+        int rightBound = data.length - 1;
+        int pointer = (leftBound + rightBound) / 2;
+        float value;
+        while (rightBound - leftBound > 1) {
+            value = data[pointer];
+            if (value < needle) {
+                rightBound = pointer;
+            } else {
+                leftBound = pointer;
+
+            }
+            pointer = (leftBound + rightBound) / 2;
+        }
+        if (rightBound == leftBound) {
+            return rightBound;
+        }
+        return leftBound + 1;
+    }
+
 }

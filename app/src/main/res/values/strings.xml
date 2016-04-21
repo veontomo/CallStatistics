@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Call Statistics</string>
+    <string-array name="truncations">
+        <item>1</item>
+        <item>5</item>
+        <item>10</item>
+        <item>50</item>
+        <item>100</item>
+    </string-array>
+
 </resources>

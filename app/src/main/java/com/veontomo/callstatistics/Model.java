@@ -22,7 +22,7 @@ public class Model {
     }
 
     /**
-     * Prepares the data to dispaly
+     * Prepares the data to display
      */
     public void prepareData() {
         Log.i(Config.appName, "the model has received a request to prepare the data");

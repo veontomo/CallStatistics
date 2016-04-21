@@ -22,25 +22,25 @@ public interface DiagramData {
      * @param i
      * @return
      */
-    float getY(int i);
+    int getY(int i);
 
     /**
      * Returns the maximal of y-values
      * @return
      */
-    float getMax();
+    int getMax();
 
 
     /**
      * Returns the minimal of y-values
      * @return
      */
-    float getMin();
+    int getMin();
 
     /**
      * Removes the elements whose y-value is less than given cutoff.
      * @param cutoff
      */
-    void truncate(float cutoff);
+    void truncate(int cutoff);
 
 }

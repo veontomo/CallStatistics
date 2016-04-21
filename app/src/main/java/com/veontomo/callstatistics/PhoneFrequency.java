@@ -1,6 +1,7 @@
 package com.veontomo.callstatistics;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -15,18 +16,18 @@ public class PhoneFrequency implements DiagramData {
 
     private String[] xValues;
 
-    private Float[] yValues;
+    private Integer[] yValues;
 
-    private Float yMax = null;
+    private Integer yMax = null;
 
-    private Float yMin = null;
+    private Integer yMin = null;
 
     public PhoneFrequency(final List<Call> data) {
         List<String> x = new ArrayList<>();
-        List<Float> y = new ArrayList<>();
+        List<Integer> y = new ArrayList<>();
         int pos;
         int newPos;
-        float freq;
+        int freq;
         if (data == null) {
             mSize = 0;
             return;
@@ -39,12 +40,12 @@ public class PhoneFrequency implements DiagramData {
                 newPos = findNewPosition(pos, y);
                 if (newPos != pos) {
                     String xVal = x.remove(pos);
-                    float yVal = y.remove(pos);
+                    int yVal = y.remove(pos);
                     x.add(newPos, xVal);
                     y.add(newPos, yVal);
                 }
             } else {
-                freq = 1f;
+                freq = 1;
                 x.add(c.callNumber);
                 y.add(freq);
             }
@@ -59,7 +60,7 @@ public class PhoneFrequency implements DiagramData {
         mSize = x.size();
         xValues = new String[mSize];
         xValues = x.toArray(xValues);
-        yValues = new Float[mSize];
+        yValues = new Integer[mSize];
         yValues = y.toArray(yValues);
 
     }
@@ -73,7 +74,7 @@ public class PhoneFrequency implements DiagramData {
      * @param pos  position of the element due to which the list is not sorted.
      * @param data list of float in almost decreasing order apart from possible one element
      */
-    public int findNewPosition(int pos, final List<Float> data) {
+    public int findNewPosition(int pos, final List<Integer> data) {
         float value = data.get(pos);
         int newPos = pos - 1;
         while (newPos >= 0 && value > data.get(newPos)) {
@@ -112,7 +113,7 @@ public class PhoneFrequency implements DiagramData {
      * @return
      */
     @Override
-    public float getY(int i) {
+    public int getY(int i) {
         return yValues[i];
     }
 
@@ -122,7 +123,7 @@ public class PhoneFrequency implements DiagramData {
      * @return
      */
     @Override
-    public float getMax() {
+    public int getMax() {
         return yMax;
     }
 
@@ -132,7 +133,7 @@ public class PhoneFrequency implements DiagramData {
      * @return
      */
     @Override
-    public float getMin() {
+    public int getMin() {
         return yMin;
     }
 
@@ -142,8 +143,14 @@ public class PhoneFrequency implements DiagramData {
      * @param cutoff
      */
     @Override
-    public void truncate(float cutoff) {
-
+    public void truncate(int cutoff) {
+        int index = findSmallerThan(cutoff, yValues);
+        if (index < mSize) {
+            mSize = index;
+            xValues = Arrays.copyOfRange(xValues, 0, mSize);
+            yValues = Arrays.copyOfRange(yValues, 0, mSize);
+            yMin = yValues[mSize-1];
+        }
     }
 
 
@@ -155,9 +162,15 @@ public class PhoneFrequency implements DiagramData {
      * @param data   sorted list in decreasing order.
      * @return
      */
-    public int findSmallerThan(float needle, Float[] data) {
+    public int findSmallerThan(int needle, Integer[] data) {
         int leftBound = 0;
         int rightBound = data.length - 1;
+        if (data[leftBound] < needle) {
+            return 0;
+        }
+        if (data[rightBound] > needle) {
+            return rightBound + 1;
+        }
         int pointer = (leftBound + rightBound) / 2;
         float value;
         while (rightBound - leftBound > 1) {
@@ -166,13 +179,31 @@ public class PhoneFrequency implements DiagramData {
                 rightBound = pointer;
             } else {
                 leftBound = pointer;
-
             }
             pointer = (leftBound + rightBound) / 2;
         }
-        if (data[leftBound])
-
-        return rightBound;
+        if (rightBound == leftBound) {
+            if (data[rightBound] > needle) {
+                return rightBound + 1;
+            }
+            return rightBound;
+        }
+        if (data[leftBound] == data[rightBound]) {
+            return rightBound + 1;
+        }
+        if (data[rightBound] == needle) {
+            return rightBound + 1;
+        }
+        if (data[leftBound] >= needle) {
+            return rightBound;
+        }
+        if (data[rightBound] > needle) {
+            return rightBound + 1;
+        }
+        if (data[rightBound] == needle) {
+            return rightBound;
+        }
+        return leftBound + 1;
     }
 
 }

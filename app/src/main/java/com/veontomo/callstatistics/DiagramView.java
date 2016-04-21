@@ -23,7 +23,7 @@ public class DiagramView extends View {
     /**
      * Data which y-value is below this value are to ignored.
      */
-    private float mCutOff;
+    private int mCutOff;
 
 
     public DiagramView(Context context, AttributeSet attrs) {
@@ -52,8 +52,9 @@ public class DiagramView extends View {
         requestLayout();
     }
 
-    public void setCutOff(float cutoff){
+    public void setCutOff(int cutoff){
         this.mCutOff = cutoff;
+        this.mData.truncate(cutoff);
         invalidate();
         requestLayout();
     }
@@ -74,9 +75,9 @@ public class DiagramView extends View {
         if (mData == null) {
             return;
         }
-        Paint p;
 
-        final int mDataSize = 20; //mData.getSize();
+        mData.truncate(5);
+        final int mDataSize = mData.getSize();
         if (mDataSize == 0) {
             return;
         }

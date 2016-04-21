@@ -170,10 +170,9 @@ public class PhoneFrequency implements DiagramData {
             }
             pointer = (leftBound + rightBound) / 2;
         }
-        if (rightBound == leftBound) {
-            return rightBound;
-        }
-        return leftBound + 1;
+        if (data[leftBound])
+
+        return rightBound;
     }
 
 }

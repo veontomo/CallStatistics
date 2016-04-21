@@ -29,11 +29,9 @@ public class MainView extends AppCompatActivity implements MVPView {
                 R.array.truncations, R.layout.spinner);
         adapter.setDropDownViewResource(R.layout.spinner_item);
 
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-
-        mTruncations.setPrompt("cutoff");
         mTruncations.setAdapter(adapter);
+
+        mPresenter.requestData();
     }
 
 

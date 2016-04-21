@@ -13,4 +13,14 @@ public interface MVPView {
 
     void loadData(DiagramData data);
 
+    boolean isTotalCallsChecked();
+
+    boolean isCallsADayChecked();
+
+    void checkTotalCalls();
+
+    void checkCallsADay();
+
+
+
 }

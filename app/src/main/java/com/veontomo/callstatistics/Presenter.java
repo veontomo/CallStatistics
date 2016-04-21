@@ -2,8 +2,6 @@ package com.veontomo.callstatistics;
 
 import android.content.Context;
 
-import java.util.ArrayList;
-
 /**
  * Presenter of MVP architecture
  */
@@ -35,7 +33,7 @@ public class Presenter {
      * Requests data from the model
      */
     public void requestData() {
-        if (this.mModel != null){
+        if (this.mModel != null) {
             mModel.prepareData();
         }
 
@@ -43,10 +41,11 @@ public class Presenter {
 
     /**
      * Passes the data to the view
+     *
      * @param stat
      */
     public void loadData(DiagramData stat) {
-        if (this.mView != null){
+        if (this.mView != null) {
             mView.loadData(stat);
         }
 
@@ -54,13 +53,33 @@ public class Presenter {
 
     /**
      * Application context setter
+     *
      * @param appContext
      */
     public void setAppContext(final Context appContext) {
         mAppContext = appContext;
     }
 
-    public Context getAppContext(){
+    public Context getAppContext() {
         return mAppContext;
+    }
+
+    /**
+     * Set the values of the view (radio buttons), request data from the model.
+     */
+    public void initView() {
+        initializeRadioButtons();
+        this.requestData();
+
+    }
+
+    /**
+     * Check the radio button corresponding to total calls, in case none of the radio buttons is checked.
+     */
+    private void initializeRadioButtons() {
+        if (!mView.isCallsADayChecked() && !mView.isTotalCallsChecked()) {
+            mView.checkTotalCalls();
+        }
+
     }
 }

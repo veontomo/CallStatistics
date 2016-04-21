@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 
 public class MainView extends AppCompatActivity implements MVPView {
@@ -15,6 +16,10 @@ public class MainView extends AppCompatActivity implements MVPView {
 
     private Spinner mTruncations;
 
+    private RadioButton mTotalCalls;
+
+    private RadioButton mCallsADay;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +29,8 @@ public class MainView extends AppCompatActivity implements MVPView {
         mPresenter.setAppContext(getApplicationContext());
         mView = (DiagramView) findViewById(R.id.diagramView);
         mTruncations = (Spinner) findViewById(R.id.truncations);
+        mTotalCalls = (RadioButton) findViewById(R.id.totalCalls);
+        mCallsADay = (RadioButton) findViewById(R.id.callsADay);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.truncations, R.layout.spinner);
@@ -31,7 +38,9 @@ public class MainView extends AppCompatActivity implements MVPView {
 
         mTruncations.setAdapter(adapter);
 
-        mPresenter.requestData();
+        mPresenter.initView();
+
+
     }
 
 
@@ -53,6 +62,30 @@ public class MainView extends AppCompatActivity implements MVPView {
         }
 
 
+    }
+
+    @Override
+    public boolean isTotalCallsChecked() {
+        return (mTotalCalls != null) && mTotalCalls.isChecked();
+    }
+
+    @Override
+    public boolean isCallsADayChecked() {
+        return (mCallsADay != null) && mCallsADay.isChecked();
+    }
+
+    @Override
+    public void checkTotalCalls() {
+        if (mTotalCalls != null) {
+            mTotalCalls.setChecked(true);
+        }
+    }
+
+    @Override
+    public void checkCallsADay() {
+        if (mCallsADay != null) {
+            mCallsADay.setChecked(true);
+        }
     }
 
 

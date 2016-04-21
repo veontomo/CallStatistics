@@ -38,11 +38,10 @@
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checkedButton="@+id/totalCalls"
             android:orientation="vertical">
 
             <RadioButton
-                android:id="@id/totalCalls"
+                android:id="@+id/totalCalls"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"

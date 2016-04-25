@@ -17,6 +17,8 @@ public class Model {
 
     private final Presenter mPresenter;
 
+    private ArrayList<Call> mCalls;
+
     public Model(final Presenter presenter) {
         mPresenter = presenter;
     }
@@ -26,7 +28,10 @@ public class Model {
      */
     public void prepareData() {
         Log.i(Config.appName, "the model has received a request to prepare the data");
-        PhoneFrequency freq = new PhoneFrequency(phoneCallStat());
+        if (mCalls == null){
+            mCalls = phoneCallStat();
+        }
+        PhoneFrequency freq = new PhoneFrequency(mCalls);
         onDataPrepared(freq);
     }
 

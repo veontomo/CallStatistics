@@ -13,9 +13,9 @@ import java.util.List;
 
 import rx.Observable;
 import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subjects.PublishSubject;
-import rx.android.schedulers.AndroidSchedulers;
 
 
 /**
@@ -33,6 +33,8 @@ public class Model {
 
     private final PublishSubject<Call> mSubject;
 
+    private PhoneFrequency mHistogram;
+
     public Model(final Presenter presenter) {
         mPresenter = presenter;
         mCalls = new ArrayList<>();
@@ -49,6 +51,9 @@ public class Model {
             @Override
             public void onCompleted() {
                 Log.i(TAG, "onCompleted: mCallsReceiver is done");
+                mHistogram = new PhoneFrequency(mCalls);
+                onDataPrepared(mHistogram);
+
             }
 
             /**
@@ -80,11 +85,13 @@ public class Model {
                 mCalls.add(call);
             }
         };
-
-
-        mSubject.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        mSubject
+//                    .subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mCallsReceiver);
+
+
+
     }
 
     /**
@@ -92,11 +99,17 @@ public class Model {
      */
     public void prepareData() {
         Log.i(Config.appName, "the model has received a request to prepare the data");
-        if (mCalls.isEmpty()) {
-            mCalls.addAll(phoneCallStat());
+
+        if (mHistogram != null) {
+            Log.i(TAG, "prepareData: histogram contains " + mHistogram.getSize() );
+            onDataPrepared(mHistogram);
+        } else {
+            Log.i(TAG, "prepareData: histogram is null");
+            phoneCallStat();
+            onDataPrepared(mHistogram);
         }
-        PhoneFrequency freq = new PhoneFrequency(mCalls);
-        onDataPrepared(freq);
+
+
     }
 
     /**
@@ -107,17 +120,17 @@ public class Model {
     private void onDataPrepared(DiagramData data) {
         if (mPresenter != null) {
             mPresenter.loadData(data);
+
         }
     }
 
-    private ArrayList<Call> phoneCallStat() {
+    private void phoneCallStat() {
+        Log.i(TAG, "phoneCallStat: start");
         final Context context = mPresenter.getAppContext();
-        Log.i(Config.appName, "last call: " + CallLog.Calls.getLastOutgoingCall(context));
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
             Log.i(Config.appName, "no permissions");
-            return null;
+            return;
         }
-        final ArrayList<Call> result = new ArrayList<>();
         Cursor cursor = context.getContentResolver().query(CallLog.Calls.CONTENT_URI, null, null, null, CallLog.Calls.DATE + " DESC");
         int number = cursor.getColumnIndex(CallLog.Calls.NUMBER);
         int type = cursor.getColumnIndex(CallLog.Calls.TYPE);
@@ -135,14 +148,12 @@ public class Model {
             callDate = cursor.getString(date);
             callDuration = cursor.getString(duration);
             Call c = new Call(phNumber, callType, Integer.parseInt(callType), Integer.parseInt(callDuration), Long.valueOf(callDate));
-            Log.i(Config.appName, String.valueOf(counter) + ": " + c.toString());
-//            result.add(c);
+//            Log.i(Config.appName, String.valueOf(counter) + ": " + c.toString());
             mSubject.onNext(c);
 
         }
         cursor.close();
         mSubject.onCompleted();
-        return result;
     }
 
 }

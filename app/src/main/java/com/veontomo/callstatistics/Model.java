@@ -10,9 +10,12 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 
+import rx.Observable;
 import rx.Subscriber;
+import rx.schedulers.Schedulers;
+import rx.subjects.PublishSubject;
+import rx.android.schedulers.AndroidSchedulers;
 
 
 /**
@@ -22,13 +25,21 @@ public class Model {
 
     private final Presenter mPresenter;
 
-    private ArrayList<Call> mCalls;
+    private final List<Call> mCalls;
 
-    private final Subscriber<List<Call>> mCallsReceiver;
+    private final Subscriber<Call> mCallsReceiver;
+
+    private final String TAG = Config.appName;
+
+    private final PublishSubject<Call> mSubject;
 
     public Model(final Presenter presenter) {
         mPresenter = presenter;
-        mCallsReceiver = new Subscriber<List<Call>>(){
+        mCalls = new ArrayList<>();
+
+        mSubject = PublishSubject.create();
+
+        mCallsReceiver = new Subscriber<Call>() {
 
             /**
              * Notifies the Observer that the {@link Observable} has finished sending push-based notifications.
@@ -37,7 +48,7 @@ public class Model {
              */
             @Override
             public void onCompleted() {
-
+                Log.i(TAG, "onCompleted: mCallsReceiver is done");
             }
 
             /**
@@ -50,7 +61,7 @@ public class Model {
              */
             @Override
             public void onError(Throwable e) {
-
+                Log.i(TAG, "onError: mCallsReceiver has thrown an error: " + e.getMessage());
             }
 
             /**
@@ -61,13 +72,18 @@ public class Model {
              * The {@code Observable} will not call this method again after it calls either {@link #onCompleted} or
              * {@link #onError}.
              *
-             * @param calls the item emitted by the Observable
+             * @param call the item emitted by the Observable
              */
             @Override
-            public void onNext(List<Call> calls) {
-
+            public void onNext(Call call) {
+                Log.i(TAG, "onNext: call data " + call.toString());
             }
         };
+
+
+        mSubject.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mCallsReceiver);
     }
 
     /**
@@ -75,8 +91,8 @@ public class Model {
      */
     public void prepareData() {
         Log.i(Config.appName, "the model has received a request to prepare the data");
-        if (mCalls == null){
-            mCalls = phoneCallStat();
+        if (mCalls.isEmpty()) {
+            mCalls.addAll(phoneCallStat());
         }
         PhoneFrequency freq = new PhoneFrequency(mCalls);
         onDataPrepared(freq);
@@ -113,6 +129,11 @@ public class Model {
         String callDuration;
         while (cursor.moveToNext()) {
             counter++;
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             phNumber = cursor.getString(number);
             callType = cursor.getString(type);
             callDate = cursor.getString(date);
@@ -120,9 +141,11 @@ public class Model {
             Call c = new Call(phNumber, callType, Integer.parseInt(callType), Integer.parseInt(callDuration), Long.valueOf(callDate));
             Log.i(Config.appName, String.valueOf(counter) + ": " + c.toString());
             result.add(c);
+            mSubject.onNext(c);
 
         }
         cursor.close();
+        mSubject.onCompleted();
         return result;
     }
 

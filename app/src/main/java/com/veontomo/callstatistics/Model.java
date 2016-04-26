@@ -29,7 +29,7 @@ public class Model {
 
     private final String TAG = Config.appName;
 
-    private final PublishSubject<Call> mSubject;
+    private final PublishSubject<Call> mStream;
 
     private CallHistogram mHistogram;
 
@@ -37,7 +37,7 @@ public class Model {
         mPresenter = presenter;
         mCalls = new ArrayList<>();
 
-        mSubject = PublishSubject.create();
+        mStream = PublishSubject.create();
 
         mCallsReceiver = new Subscriber<Call>() {
 
@@ -65,6 +65,7 @@ public class Model {
             @Override
             public void onError(Throwable e) {
                 Log.i(TAG, "onError: mCallsReceiver has thrown an error: " + e.getMessage());
+                mPresenter.onError("Failed to add a Call instance to the stream");
             }
 
             /**
@@ -83,8 +84,8 @@ public class Model {
                 mCalls.add(call);
             }
         };
-        mSubject
-// TODO: find out why assigning the thread leads to the fact that mSubject methods onNext and onCompleted get never called
+        mStream
+// TODO: find out why assigning the thread leads to the fact that mStream methods onNext and onCompleted get never called
 //                    .subscribeOn(Schedulers.io())
 //                    .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mCallsReceiver);
@@ -94,7 +95,7 @@ public class Model {
      * Prepares the data to display
      */
     public void prepareData() {
-        Log.i(Config.appName, "the model has received a request to prepare the data");
+        Log.i(TAG, "the model has received a request to prepare the data");
 
         if (mHistogram != null) {
             Log.i(TAG, "prepareData: histogram contains " + mHistogram.getSize());
@@ -103,8 +104,8 @@ public class Model {
             Log.i(TAG, "prepareData: histogram is null");
             final Context context = mPresenter.getAppContext();
             if (context != null) {
-                readCallLog(context, mSubject);
-                mSubject.onCompleted();
+                readCallLog(context, mStream);
+                mStream.onCompleted();
             }
         }
 
@@ -131,8 +132,6 @@ public class Model {
      * @param stream
      */
     private void readCallLog(final Context context, final PublishSubject<Call> stream) {
-        Log.i(TAG, "readCallLog: start");
-
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
             Log.i(TAG, "no permissions");
             return;
@@ -157,7 +156,6 @@ public class Model {
             callDuration = cursor.getString(duration);
             Call c = new Call(phNumber, callType, Integer.parseInt(callType), Integer.parseInt(callDuration), Long.valueOf(callDate));
             stream.onNext(c);
-
         }
         cursor.close();
     }

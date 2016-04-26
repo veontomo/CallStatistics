@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class MainView extends AppCompatActivity implements MVPView {
 
@@ -86,6 +87,11 @@ public class MainView extends AppCompatActivity implements MVPView {
         if (mCallsADay != null) {
             mCallsADay.setChecked(true);
         }
+    }
+
+    @Override
+    public void onError(String text) {
+        Toast.makeText(MainView.this, text, Toast.LENGTH_SHORT).show();
     }
 
 

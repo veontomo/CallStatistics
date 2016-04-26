@@ -22,5 +22,5 @@ public interface MVPView {
     void checkCallsADay();
 
 
-
+    void onError(String text);
 }

@@ -80,6 +80,9 @@ public class Presenter {
         if (!mView.isCallsADayChecked() && !mView.isTotalCallsChecked()) {
             mView.checkTotalCalls();
         }
+    }
 
+    public void onError(final String text){
+        mView.onError(text);
     }
 }

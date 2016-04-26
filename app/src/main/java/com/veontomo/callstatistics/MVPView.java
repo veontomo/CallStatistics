@@ -3,6 +3,7 @@ package com.veontomo.callstatistics;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * View interface of MVP architecture
@@ -23,4 +24,6 @@ public interface MVPView {
 
 
     void onError(String text);
+
+    void loadListData(final CallHistogram calls);
 }

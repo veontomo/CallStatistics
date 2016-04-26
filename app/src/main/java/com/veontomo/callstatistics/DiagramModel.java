@@ -17,9 +17,9 @@ import rx.subjects.PublishSubject;
 
 
 /**
- * Model of MVP architecture
+ * Diagram model of MVP architecture
  */
-public class Model {
+public class DiagramModel {
 
     private final Presenter mPresenter;
 
@@ -33,7 +33,7 @@ public class Model {
 
     private CallHistogram mHistogram;
 
-    public Model(final Presenter presenter) {
+    public DiagramModel(final Presenter presenter) {
         mPresenter = presenter;
         mCalls = new ArrayList<>();
 
@@ -50,7 +50,7 @@ public class Model {
             public void onCompleted() {
                 Log.i(TAG, "onCompleted: mCallsReceiver is done");
                 mHistogram = new CallHistogram(mCalls);
-                onDataPrepared(mHistogram);
+                onDataPrepared();
 
             }
 
@@ -80,7 +80,7 @@ public class Model {
              */
             @Override
             public void onNext(Call call) {
-                Log.i(TAG, "onNext: call data " + call.toString());
+//                Log.i(TAG, "onNext: call data " + call.toString());
                 mCalls.add(call);
             }
         };
@@ -99,7 +99,7 @@ public class Model {
 
         if (mHistogram != null) {
             Log.i(TAG, "prepareData: histogram contains " + mHistogram.getSize());
-            onDataPrepared(mHistogram);
+            onDataPrepared();
         } else {
             Log.i(TAG, "prepareData: histogram is null");
             final Context context = mPresenter.getAppContext();
@@ -115,11 +115,11 @@ public class Model {
     /**
      * Passes the prepared data to the presenter.
      *
-     * @param data
      */
-    private void onDataPrepared(DiagramData data) {
+    private void onDataPrepared() {
         if (mPresenter != null) {
-            mPresenter.loadData(data);
+            mPresenter.loadData(mHistogram);
+            mPresenter.loadListData(mHistogram);
 
         }
     }

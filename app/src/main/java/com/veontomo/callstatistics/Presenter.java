@@ -2,12 +2,14 @@ package com.veontomo.callstatistics;
 
 import android.content.Context;
 
+import java.util.List;
+
 /**
  * Presenter of MVP architecture
  */
 public class Presenter {
 
-    private Model mModel;
+    private DiagramModel mDiagramModel;
     private final MVPView mView;
     /**
      * application context
@@ -20,21 +22,21 @@ public class Presenter {
 
     public static Presenter create(MVPView view) {
         Presenter presenter = new Presenter(view);
-        Model model = new Model(presenter);
-        presenter.setModel(model);
+        DiagramModel diagramModel = new DiagramModel(presenter);
+        presenter.setDiagramModel(diagramModel);
         return presenter;
     }
 
-    public void setModel(Model model) {
-        mModel = model;
+    public void setDiagramModel(DiagramModel diagramModel) {
+        mDiagramModel = diagramModel;
     }
 
     /**
      * Requests data from the model
      */
     public void requestData() {
-        if (this.mModel != null) {
-            mModel.prepareData();
+        if (this.mDiagramModel != null) {
+            mDiagramModel.prepareData();
         }
 
     }
@@ -84,5 +86,15 @@ public class Presenter {
 
     public void onError(final String text){
         mView.onError(text);
+    }
+
+    /**
+     * Passes the calls to the view
+     */
+    public void loadListData(CallHistogram calls) {
+        if (mView != null){
+            mView.loadListData(calls);
+        }
+
     }
 }

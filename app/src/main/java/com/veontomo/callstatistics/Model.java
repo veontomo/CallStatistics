@@ -77,6 +77,7 @@ public class Model {
             @Override
             public void onNext(Call call) {
                 Log.i(TAG, "onNext: call data " + call.toString());
+                mCalls.add(call);
             }
         };
 
@@ -129,18 +130,13 @@ public class Model {
         String callDuration;
         while (cursor.moveToNext()) {
             counter++;
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             phNumber = cursor.getString(number);
             callType = cursor.getString(type);
             callDate = cursor.getString(date);
             callDuration = cursor.getString(duration);
             Call c = new Call(phNumber, callType, Integer.parseInt(callType), Integer.parseInt(callDuration), Long.valueOf(callDate));
             Log.i(Config.appName, String.valueOf(counter) + ": " + c.toString());
-            result.add(c);
+//            result.add(c);
             mSubject.onNext(c);
 
         }

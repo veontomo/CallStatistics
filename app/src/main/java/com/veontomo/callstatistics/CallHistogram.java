@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Diagram data that shows how often a phone number occurs in phone call registry.
  */
-public class PhoneFrequency implements DiagramData {
+public class CallHistogram implements DiagramData {
 
     /**
      * number of elements in the diagram data
@@ -22,7 +22,7 @@ public class PhoneFrequency implements DiagramData {
 
     private Integer yMin = null;
 
-    public PhoneFrequency(final List<Call> data) {
+    public CallHistogram(final List<Call> data) {
         List<String> x = new ArrayList<>();
         List<Integer> y = new ArrayList<>();
         int pos;

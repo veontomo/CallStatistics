@@ -9,13 +9,13 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Tests for methods of {@link PhoneFrequency} class.
+ * Tests for methods of {@link CallHistogram} class.
  */
-public class PhoneFrequencyTest {
+public class CallHistogramTest {
 
     @Test
     public void testEmptyData() {
-        PhoneFrequency diagram = new PhoneFrequency(new ArrayList<Call>());
+        CallHistogram diagram = new CallHistogram(new ArrayList<Call>());
         assertEquals(0, diagram.getSize());
     }
 
@@ -28,7 +28,7 @@ public class PhoneFrequencyTest {
         data.add(c1);
         data.add(c2);
         data.add(c3);
-        PhoneFrequency diagram = new PhoneFrequency(data);
+        CallHistogram diagram = new CallHistogram(data);
         assertEquals(3, diagram.getSize());
     }
 
@@ -41,7 +41,7 @@ public class PhoneFrequencyTest {
         data.add(c1);
         data.add(c2);
         data.add(c3);
-        PhoneFrequency diagram = new PhoneFrequency(data);
+        CallHistogram diagram = new CallHistogram(data);
         assertEquals("a", diagram.getX(0));
         assertEquals("b", diagram.getX(1));
         assertEquals("c", diagram.getX(2));
@@ -56,7 +56,7 @@ public class PhoneFrequencyTest {
         data.add(c1);
         data.add(c2);
         data.add(c3);
-        PhoneFrequency diagram = new PhoneFrequency(data);
+        CallHistogram diagram = new CallHistogram(data);
         assertEquals(1, (int) diagram.getY(0));
         assertEquals(1, (int) diagram.getY(1));
         assertEquals(1, (int) diagram.getY(2));
@@ -72,7 +72,7 @@ public class PhoneFrequencyTest {
         data.add(c1);
         data.add(c2);
         data.add(c3);
-        PhoneFrequency diagram = new PhoneFrequency(data);
+        CallHistogram diagram = new CallHistogram(data);
         assertEquals(2, diagram.getSize());
     }
 
@@ -85,7 +85,7 @@ public class PhoneFrequencyTest {
         data.add(c1);
         data.add(c2);
         data.add(c3);
-        PhoneFrequency diagram = new PhoneFrequency(data);
+        CallHistogram diagram = new CallHistogram(data);
         assertEquals("a", diagram.getX(0));
         assertEquals("b", diagram.getX(1));
     }
@@ -99,7 +99,7 @@ public class PhoneFrequencyTest {
         data.add(c1);
         data.add(c2);
         data.add(c3);
-        PhoneFrequency diagram = new PhoneFrequency(data);
+        CallHistogram diagram = new CallHistogram(data);
         assertEquals(2, diagram.getY(0));
         assertEquals(1, diagram.getY(1));
     }
@@ -107,65 +107,65 @@ public class PhoneFrequencyTest {
 
     @Test
     public void testFindPosition3To0() {
-        PhoneFrequency diagram = new PhoneFrequency(null);
+        CallHistogram diagram = new CallHistogram(null);
         List<Integer> data = new ArrayList<>(Arrays.asList(new Integer[]{2, 2, 2, 3}));
         assertEquals(0, diagram.findNewPosition(3, data));
     }
 
     @Test
     public void testFindPosition4To2() {
-        PhoneFrequency diagram = new PhoneFrequency(null);
+        CallHistogram diagram = new CallHistogram(null);
         List<Integer> data = new ArrayList<>(Arrays.asList(new Integer[]{5, 4, 2, 2, 3, 1}));
         assertEquals(2, diagram.findNewPosition(4, data));
     }
 
     @Test
     public void testFindPosition3To3() {
-        PhoneFrequency diagram = new PhoneFrequency(null);
+        CallHistogram diagram = new CallHistogram(null);
         List<Integer> data = new ArrayList<>(Arrays.asList(new Integer[]{3, 3, 3, 3, 2}));
         assertEquals(3, diagram.findNewPosition(3, data));
     }
 
     @Test
     public void testFindPosition3To1() {
-        PhoneFrequency diagram = new PhoneFrequency(null);
+        CallHistogram diagram = new CallHistogram(null);
         List<Integer> data = new ArrayList<>(Arrays.asList(new Integer[]{3, 2, 2, 3, 1}));
         assertEquals(1, diagram.findNewPosition(3, data));
     }
 
     @Test
     public void findSmallerThanTheLast() throws Exception {
-        PhoneFrequency diagram = new PhoneFrequency(null);
+        CallHistogram diagram = new CallHistogram(null);
         assertEquals(5, diagram.findSmallerThan(1, new Integer[]{3, 2, 2, 2, 1}));
     }
 
     @Test
     public void findSmallerThanTheLastRepeating() throws Exception {
-        PhoneFrequency diagram = new PhoneFrequency(null);
+        CallHistogram diagram = new CallHistogram(null);
         assertEquals(8, diagram.findSmallerThan(1, new Integer[]{3, 2, 2, 2, 1, 1, 1, 1}));
     }
 
     @Test
     public void findSmallerThanNothing() throws Exception {
-        PhoneFrequency diagram = new PhoneFrequency(null);
+        CallHistogram diagram = new CallHistogram(null);
         assertEquals(4, diagram.findSmallerThan(1, new Integer[]{10, 7, 4, 3}));
     }
 
     @Test
     public void findSmallerThanMiddle() throws Exception {
-        PhoneFrequency diagram = new PhoneFrequency(null);
+        CallHistogram diagram = new CallHistogram(null);
         assertEquals(4, diagram.findSmallerThan(2, new Integer[]{3, 2, 2, 2, 1}));
     }
 
     @Test
     public void findSmallerThanAll() throws Exception {
-        PhoneFrequency diagram = new PhoneFrequency(null);
+        CallHistogram diagram = new CallHistogram(null);
         assertEquals(0, diagram.findSmallerThan(10, new Integer[]{3, 2, 2, 2, 1}));
     }
 
     @Test
     public void findSmallerThanAllDifferent() throws Exception {
-        PhoneFrequency diagram = new PhoneFrequency(null);
+        CallHistogram diagram = new CallHistogram(null);
         assertEquals(5, diagram.findSmallerThan(5, new Integer[]{10, 9, 8, 7, 6, 4, 3, 2, 1}));
     }
 

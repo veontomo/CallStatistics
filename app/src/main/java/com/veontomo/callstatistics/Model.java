@@ -13,8 +13,6 @@ import java.util.List;
 
 import rx.Observable;
 import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 import rx.subjects.PublishSubject;
 
 
@@ -33,7 +31,7 @@ public class Model {
 
     private final PublishSubject<Call> mSubject;
 
-    private PhoneFrequency mHistogram;
+    private CallHistogram mHistogram;
 
     public Model(final Presenter presenter) {
         mPresenter = presenter;
@@ -51,7 +49,7 @@ public class Model {
             @Override
             public void onCompleted() {
                 Log.i(TAG, "onCompleted: mCallsReceiver is done");
-                mHistogram = new PhoneFrequency(mCalls);
+                mHistogram = new CallHistogram(mCalls);
                 onDataPrepared(mHistogram);
 
             }
@@ -86,12 +84,10 @@ public class Model {
             }
         };
         mSubject
+// TODO: find out why assigning the thread leads to the fact that mSubject methods onNext and onCompleted get never called
 //                    .subscribeOn(Schedulers.io())
 //                    .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mCallsReceiver);
-
-
-
     }
 
     /**
@@ -101,12 +97,15 @@ public class Model {
         Log.i(Config.appName, "the model has received a request to prepare the data");
 
         if (mHistogram != null) {
-            Log.i(TAG, "prepareData: histogram contains " + mHistogram.getSize() );
+            Log.i(TAG, "prepareData: histogram contains " + mHistogram.getSize());
             onDataPrepared(mHistogram);
         } else {
             Log.i(TAG, "prepareData: histogram is null");
-            phoneCallStat();
-            onDataPrepared(mHistogram);
+            final Context context = mPresenter.getAppContext();
+            if (context != null) {
+                readCallLog(context, mSubject);
+                mSubject.onCompleted();
+            }
         }
 
 
@@ -124,36 +123,41 @@ public class Model {
         }
     }
 
-    private void phoneCallStat() {
-        Log.i(TAG, "phoneCallStat: start");
-        final Context context = mPresenter.getAppContext();
+    /**
+     * Reading the call log.
+     * <p/>
+     * Each call log data is transformed in a Call instance and passed to the RxJava stream receiver {@link #mSubject}.
+     */
+    private void readCallLog(final Context context, final PublishSubject<Call> stream) {
+        Log.i(TAG, "readCallLog: start");
+
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
-            Log.i(Config.appName, "no permissions");
+            Log.i(TAG, "no permissions");
             return;
         }
         Cursor cursor = context.getContentResolver().query(CallLog.Calls.CONTENT_URI, null, null, null, CallLog.Calls.DATE + " DESC");
+        if (cursor == null) {
+            Log.i(TAG, "The cursor is null, so no data can be read.");
+            return;
+        }
         int number = cursor.getColumnIndex(CallLog.Calls.NUMBER);
         int type = cursor.getColumnIndex(CallLog.Calls.TYPE);
         int date = cursor.getColumnIndex(CallLog.Calls.DATE);
         int duration = cursor.getColumnIndex(CallLog.Calls.DURATION);
-        int counter = 0;
         String phNumber;
         String callType;
         String callDate;
         String callDuration;
         while (cursor.moveToNext()) {
-            counter++;
             phNumber = cursor.getString(number);
             callType = cursor.getString(type);
             callDate = cursor.getString(date);
             callDuration = cursor.getString(duration);
             Call c = new Call(phNumber, callType, Integer.parseInt(callType), Integer.parseInt(callDuration), Long.valueOf(callDate));
-//            Log.i(Config.appName, String.valueOf(counter) + ": " + c.toString());
-            mSubject.onNext(c);
+            stream.onNext(c);
 
         }
         cursor.close();
-        mSubject.onCompleted();
     }
 
 }

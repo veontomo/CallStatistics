@@ -126,7 +126,9 @@ public class Model {
     /**
      * Reading the call log.
      * <p/>
-     * Each call log data is transformed in a Call instance and passed to the RxJava stream receiver {@link #mSubject}.
+     * Each call log data is transformed in a Call instance and passed to the RxJava stream receiver.
+     * @param context
+     * @param stream
      */
     private void readCallLog(final Context context, final PublishSubject<Call> stream) {
         Log.i(TAG, "readCallLog: start");

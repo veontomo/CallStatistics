@@ -3,4 +3,5 @@
     <string name="app_name">Istogramma di chiamate</string>
     <string name="no_results">Nessun dato disponibile</string>
     <string name="description">Il numero di chiamate ricevute o effettuate ad un numero telefonico</string>
+    <string name="cutoff">Valore di taglio:</string>
 </resources>

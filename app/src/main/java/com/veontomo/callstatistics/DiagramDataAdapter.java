@@ -81,6 +81,12 @@ public class DiagramDataAdapter extends BaseAdapter {
         return position;
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return (position % LAYOUT_TYPES_NUM == 0) ? LAYOUT_TYPE_1 : LAYOUT_TYPE_2;
+    }
+
+
     /**
      * Get a View that displays the data at the specified position in the data set. You can either
      * create a View manually or inflate it from an XML layout file. When the View is inflated, the
@@ -102,7 +108,7 @@ public class DiagramDataAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
-        int itemType = position % LAYOUT_TYPES_NUM;
+        int itemType = getItemViewType(position);
         switch (itemType) {
             case LAYOUT_TYPE_1:
                 if (row == null) {

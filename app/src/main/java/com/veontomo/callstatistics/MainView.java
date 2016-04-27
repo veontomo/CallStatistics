@@ -22,10 +22,6 @@ public class MainView extends AppCompatActivity implements MVPView {
 
     private Spinner mTruncations;
 
-    private RadioButton mTotalCalls;
-
-    private RadioButton mCallsADay;
-
     private DiagramDataAdapter mListAdapter;
 
 
@@ -38,8 +34,6 @@ public class MainView extends AppCompatActivity implements MVPView {
         mPresenter.setAppContext(getApplicationContext());
         mDiagramView = (DiagramView) findViewById(R.id.diagramView);
         mTruncations = (Spinner) findViewById(R.id.truncations);
-        mTotalCalls = (RadioButton) findViewById(R.id.totalCalls);
-        mCallsADay = (RadioButton) findViewById(R.id.callsADay);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.truncations, R.layout.spinner);
@@ -74,29 +68,6 @@ public class MainView extends AppCompatActivity implements MVPView {
         }
     }
 
-    @Override
-    public boolean isTotalCallsChecked() {
-        return (mTotalCalls != null) && mTotalCalls.isChecked();
-    }
-
-    @Override
-    public boolean isCallsADayChecked() {
-        return (mCallsADay != null) && mCallsADay.isChecked();
-    }
-
-    @Override
-    public void checkTotalCalls() {
-        if (mTotalCalls != null) {
-            mTotalCalls.setChecked(true);
-        }
-    }
-
-    @Override
-    public void checkCallsADay() {
-        if (mCallsADay != null) {
-            mCallsADay.setChecked(true);
-        }
-    }
 
     @Override
     public void onError(String text) {

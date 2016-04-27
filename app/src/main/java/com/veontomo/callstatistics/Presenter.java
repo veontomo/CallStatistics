@@ -70,19 +70,11 @@ public class Presenter {
      * Set the values of the view (radio buttons), request data from the model.
      */
     public void initView() {
-        initializeRadioButtons();
         this.requestData();
 
     }
 
-    /**
-     * Check the radio button corresponding to total calls, in case none of the radio buttons is checked.
-     */
-    private void initializeRadioButtons() {
-        if (!mView.isCallsADayChecked() && !mView.isTotalCallsChecked()) {
-            mView.checkTotalCalls();
-        }
-    }
+
 
     public void onError(final String text){
         mView.onError(text);

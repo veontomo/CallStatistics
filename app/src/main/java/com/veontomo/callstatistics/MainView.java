@@ -31,7 +31,7 @@ public class MainView extends AppCompatActivity implements MVPView {
         mPresenter = Presenter.create(this);
         mPresenter.setAppContext(getApplicationContext());
         mDiagramView = (DiagramView) findViewById(R.id.diagramView);
-        mTruncations = (Spinner) findViewById(R.id.truncations);
+        mTruncations = (Spinner) findViewById(R.id.cutoffValues);
         mTruncations.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {

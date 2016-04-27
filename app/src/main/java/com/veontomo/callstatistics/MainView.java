@@ -50,6 +50,7 @@ public class MainView extends AppCompatActivity implements MVPView {
         mListView = (ListView) findViewById(R.id.listView);
         mListAdapter = new DiagramDataAdapter(getApplicationContext());
         mListView.setAdapter(mListAdapter);
+        mListView.setEmptyView(findViewById(android.R.id.empty));
 
         mPresenter.initView();
     }

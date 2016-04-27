@@ -76,7 +76,6 @@ public class DiagramView extends View {
             return;
         }
 
-        mData.truncate(5);
         final int mDataSize = mData.getSize();
         if (mDataSize == 0) {
             return;

@@ -4,13 +4,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
-
-import java.util.List;
 
 public class MainView extends AppCompatActivity implements MVPView {
 
@@ -34,6 +32,22 @@ public class MainView extends AppCompatActivity implements MVPView {
         mPresenter.setAppContext(getApplicationContext());
         mDiagramView = (DiagramView) findViewById(R.id.diagramView);
         mTruncations = (Spinner) findViewById(R.id.truncations);
+        mTruncations.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                String value = parentView.getItemAtPosition(position).toString();
+                if (value != null) {
+                    int cutoff = Integer.parseInt(value);
+                    mPresenter.setCutoff(cutoff);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                Log.i(TAG, "onItemSelected: nothing is selected");
+            }
+
+        });
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.truncations, R.layout.spinner);

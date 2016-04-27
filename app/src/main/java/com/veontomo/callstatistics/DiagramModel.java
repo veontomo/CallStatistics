@@ -114,7 +114,6 @@ public class DiagramModel {
 
     /**
      * Passes the prepared data to the presenter.
-     *
      */
     private void onDataPrepared() {
         if (mPresenter != null) {
@@ -128,6 +127,7 @@ public class DiagramModel {
      * Reading the call log.
      * <p/>
      * Each call log data is transformed in a Call instance and passed to the RxJava stream receiver.
+     *
      * @param context
      * @param stream
      */
@@ -149,4 +149,9 @@ public class DiagramModel {
         cursor.close();
     }
 
+    public void setCutoff(int cutoff) {
+        mHistogram = new CallHistogram(mCalls);
+        mHistogram.truncate(cutoff);
+        onDataPrepared();
+    }
 }

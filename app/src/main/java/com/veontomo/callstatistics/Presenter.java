@@ -2,19 +2,24 @@ package com.veontomo.callstatistics;
 
 import android.content.Context;
 
-import java.util.List;
-
 /**
  * Presenter of MVP architecture
  */
 public class Presenter {
 
     private DiagramModel mDiagramModel;
+
     private final MVPView mView;
+
     /**
      * application context
      */
     private Context mAppContext;
+
+    /**
+     * values below this one are to be dropped out in the histogram
+     */
+    private int mCutoff = 0;
 
     public Presenter(MVPView view) {
         mView = view;
@@ -75,8 +80,7 @@ public class Presenter {
     }
 
 
-
-    public void onError(final String text){
+    public void onError(final String text) {
         mView.onError(text);
     }
 
@@ -84,9 +88,16 @@ public class Presenter {
      * Passes the calls to the view
      */
     public void loadListData(CallHistogram calls) {
-        if (mView != null){
+        if (mView != null) {
             mView.loadListData(calls);
         }
 
+    }
+
+    public void setCutoff(int cutoff) {
+        if (cutoff != mCutoff) {
+            mCutoff = cutoff;
+            mDiagramModel.setCutoff(cutoff);
+        }
     }
 }

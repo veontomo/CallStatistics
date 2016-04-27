@@ -5,7 +5,7 @@ The application shows the histogram of your recent calls. In other words, it dis
 
 This toy application takes into consideration only how frequent a phone number appears in the call log. As a future direction, it might be interesting as well to consider the call directions, their durations and so on. 
 
-![alt tag](https://github.com/veontomo/CallStatistics/master/CallStatisticsScreenshot.png)
+![Application screenshot](https://github.com/veontomo/CallStatistics/blob/master/CallStatisticsScreenshot.png)
 
 The data is drawn as a standard histogram and is displayed as well as a simple list.
 

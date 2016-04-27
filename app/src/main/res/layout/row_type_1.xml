@@ -6,9 +6,8 @@
 
     <TextView
         android:id="@+id/text"
+        style="@style/row1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#c5afeff2"
-        android:drawableLeft="@drawable/phone"/>
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

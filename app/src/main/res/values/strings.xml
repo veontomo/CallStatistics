@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">Call Statistics</string>
-    <string name="no_results">No results</string>
+    <string name="app_name">Call histogram</string>
+    <string name="no_results">No data available</string>
+    <string name="description">The number of times you have called to or you have received a call from a given phone number</string>
     <string-array name="truncations">
         <item>1</item>
         <item>5</item>

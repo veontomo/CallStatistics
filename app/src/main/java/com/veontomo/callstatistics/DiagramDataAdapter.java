@@ -108,7 +108,7 @@ public class DiagramDataAdapter extends BaseAdapter {
                     LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     row = inflater.inflate(R.layout.row_type_1, parent, false);
                     Holder1 holder1 = new Holder1();
-                    holder1.text = (TextView) row.findViewById(R.id.text);
+                    holder1.text = (TextView) row.findViewById(R.id.phoneNumber);
                     row.setTag(holder1);
                 }
                 Holder1 holder1 = (Holder1) row.getTag();

@@ -19,4 +19,7 @@ The app specs:
 
 In future it would be interesting to use RxJava in order to add some animation when plotting the histogram.
 
+Apk files are located here: 
+[apk-debug](blob/v1/apk/app-debug.apk)
+
 

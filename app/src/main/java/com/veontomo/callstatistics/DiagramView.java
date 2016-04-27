@@ -20,11 +20,6 @@ public class DiagramView extends View {
     private float width = 0;
     private float height = 0;
     private Paint painter = new Paint();
-    /**
-     * Data which y-value is below this value are to ignored.
-     */
-    private int mCutOff;
-
 
     public DiagramView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -52,12 +47,6 @@ public class DiagramView extends View {
         requestLayout();
     }
 
-    public void setCutOff(int cutoff){
-        this.mCutOff = cutoff;
-        this.mData.truncate(cutoff);
-        invalidate();
-        requestLayout();
-    }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {

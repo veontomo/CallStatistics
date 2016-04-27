@@ -5,6 +5,8 @@ The application shows the histogram of your recent calls. In other words, it dis
 
 This toy application takes into consideration only how frequent a phone number appears in the call log. As a future direction, it might be interesting as well to consider the call directions, their durations and so on. 
 
+![Application screenshot](https://github.com/veontomo/CallStatistics/blob/master/CallStatisticsScreenshot.png)
+
 The data is drawn as a standard histogram and is displayed as well as a simple list.
 
 The app specs:
@@ -16,5 +18,9 @@ The app specs:
 
 
 In future it would be interesting to use RxJava in order to add some animation when plotting the histogram.
+
+Apk files are located here: 
+1. [apk-debug](../v1/apk/app-debug.apk)
+2. [app-debug-unaligned](../v1/apk/app-debug-unaligned.apk)
 
 

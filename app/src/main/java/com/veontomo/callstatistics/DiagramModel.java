@@ -142,19 +142,8 @@ public class DiagramModel {
             return;
         }
         int number = cursor.getColumnIndex(CallLog.Calls.NUMBER);
-        int type = cursor.getColumnIndex(CallLog.Calls.TYPE);
-        int date = cursor.getColumnIndex(CallLog.Calls.DATE);
-        int duration = cursor.getColumnIndex(CallLog.Calls.DURATION);
-        String phNumber;
-        String callType;
-        String callDate;
-        String callDuration;
         while (cursor.moveToNext()) {
-            phNumber = cursor.getString(number);
-            callType = cursor.getString(type);
-            callDate = cursor.getString(date);
-            callDuration = cursor.getString(duration);
-            Call c = new Call(phNumber, callType, Integer.parseInt(callType), Integer.parseInt(callDuration), Long.valueOf(callDate));
+            Call c = new Call(cursor.getString(number));
             stream.onNext(c);
         }
         cursor.close();

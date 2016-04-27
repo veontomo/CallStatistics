@@ -23,8 +23,6 @@
 
     <style name="row1">
         <item name="android:padding">4dp</item>
-        <item name="android:textSize">18sp</item>
-        <item name="android:textColor">#78B2D3</item>
     </style>
 
     <style name="row2" parent="row1">
@@ -32,6 +30,8 @@
     </style>
 
     <style name="phoneNumber">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">#3655d2</item>
         <item name="android:drawablePadding">8dp</item>
         <item name="android:drawableLeft">@drawable/phone</item>
     </style>

@@ -14,7 +14,8 @@ import android.widget.TextView;
 public class DiagramDataAdapter extends BaseAdapter {
     private static final String TAG = Config.appName;
     private final Context mContext;
-    private String[] mData;
+    private String[] mDataX;
+    private int[] mDataY;
 
     public DiagramDataAdapter(final Context context) {
         mContext = context;
@@ -66,7 +67,7 @@ public class DiagramDataAdapter extends BaseAdapter {
      */
     @Override
     public String getItem(int position) {
-        return mData[position];
+        return mDataX[position];
     }
 
     /**
@@ -108,11 +109,13 @@ public class DiagramDataAdapter extends BaseAdapter {
                     LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     row = inflater.inflate(R.layout.row_type_1, parent, false);
                     Holder1 holder1 = new Holder1();
-                    holder1.text = (TextView) row.findViewById(R.id.phoneNumber);
+                    holder1.number = (TextView) row.findViewById(R.id.phoneNumber1);
+                    holder1.frequency = (TextView) row.findViewById(R.id.phoneFrequency1);
                     row.setTag(holder1);
                 }
                 Holder1 holder1 = (Holder1) row.getTag();
-                holder1.text.setText(getItem(position));
+                holder1.number.setText(getItem(position));
+                holder1.frequency.setText(String.valueOf(mDataY[position]));
                 break;
             case LAYOUT_TYPE_2:
             default:
@@ -120,11 +123,13 @@ public class DiagramDataAdapter extends BaseAdapter {
                     LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     row = inflater.inflate(R.layout.row_type_2, parent, false);
                     Holder2 holder2 = new Holder2();
-                    holder2.text = (TextView) row.findViewById(R.id.text2);
+                    holder2.number = (TextView) row.findViewById(R.id.phoneNumber2);
+                    holder2.frequency = (TextView) row.findViewById(R.id.phoneFrequency2);
                     row.setTag(holder2);
                 }
                 Holder2 holder2 = (Holder2) row.getTag();
-                holder2.text.setText(getItem(position));
+                holder2.number.setText(getItem(position));
+                holder2.frequency.setText(String.valueOf(mDataY[position]));
 
         }
         return row;
@@ -137,19 +142,24 @@ public class DiagramDataAdapter extends BaseAdapter {
     public void loadData(final CallHistogram data) {
         mCount = data.getSize();
         Log.i(TAG, "loadData: loading " + mCount + " items to the list adapter");
-        mData = new String[mCount];
+        mDataX = new String[mCount];
+        mDataY = new int[mCount];
         for (int i = 0;  i < mCount; i++){
-            mData[i] = data.getX(i);
+            mDataX[i] = data.getX(i);
+            mDataY[i] = data.getY(i);
         }
         notifyDataSetChanged();
     }
 
     private static class Holder1 {
-        public TextView text;
+        public TextView number;
+        public TextView frequency;
+
     }
 
     private static class Holder2 {
-        public TextView text;
+        public TextView number;
+        public TextView frequency;
     }
 
 }

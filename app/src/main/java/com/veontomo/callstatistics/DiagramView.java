@@ -13,7 +13,7 @@ import android.view.View;
  * http://developer.android.com/intl/ru/training/custom-views/index.html
  */
 public class DiagramView extends View {
-    private final int[] colorCodes = new int[]{0xffd32f2f, 0xff388e3c, 0xff512da8, 0xfffbc02d, 0xff00796b, 0xffafb42b,  0xfff57c00, 0xff303f9f, 0xff455a64};
+    private final int[] colorCodes = new int[]{0xffd32f2f, 0xff388e3c, 0xff512da8, 0xfffbc02d, 0xff00796b, 0xffafb42b, 0xfff57c00, 0xff303f9f, 0xff455a64};
 
     private DiagramData mData;
 
@@ -38,6 +38,7 @@ public class DiagramView extends View {
 
     /**
      * Loads the data to visualize
+     *
      * @param data
      */
     public void loadData(DiagramData data) {
@@ -66,6 +67,7 @@ public class DiagramView extends View {
         }
 
         final int mDataSize = mData.getSize();
+        Log.i(Config.appName, "data size: " + String.valueOf(mDataSize));
         if (mDataSize == 0) {
             return;
         }
@@ -79,6 +81,5 @@ public class DiagramView extends View {
             painter.setColor(colorCodes[i % colorCodesSize]);
             canvas.drawRect(i * barWidth, height, (i + 1) * barWidth - 1, height - h, painter);
         }
-
     }
 }

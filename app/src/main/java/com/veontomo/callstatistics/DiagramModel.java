@@ -140,10 +140,16 @@ public class DiagramModel {
             Log.i(TAG, "The cursor is null, so no data can be read.");
             return;
         }
+        int normalizedNumberColumn = cursor.getColumnIndex(CallLog.Calls.CACHED_NORMALIZED_NUMBER);
         int numberColumn = cursor.getColumnIndex(CallLog.Calls.NUMBER);
         int nameColumn = cursor.getColumnIndex(CallLog.Calls.CACHED_NAME);
+        String number;
         while (cursor.moveToNext()) {
-            Call c = new Call(cursor.getString(numberColumn), cursor.getString(nameColumn));
+            number = cursor.getString(normalizedNumberColumn);
+            if (number == null){
+                number = cursor.getString(numberColumn);
+            }
+            Call c = new Call(number, cursor.getString(nameColumn));
             stream.onNext(c);
         }
         cursor.close();

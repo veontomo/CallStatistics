@@ -15,6 +15,7 @@ public class DiagramDataAdapter extends BaseAdapter {
     private static final String TAG = Config.appName;
     private final Context mContext;
     private String[] mDataX;
+    private String[] mDataXLegend;
     private int[] mDataY;
 
     public DiagramDataAdapter(final Context context) {
@@ -117,11 +118,13 @@ public class DiagramDataAdapter extends BaseAdapter {
                     Holder1 holder1 = new Holder1();
                     holder1.number = (TextView) row.findViewById(R.id.phoneNumber1);
                     holder1.frequency = (TextView) row.findViewById(R.id.phoneFrequency1);
+                    holder1.name = (TextView) row.findViewById(R.id.cachedName1);
                     row.setTag(holder1);
                 }
                 Holder1 holder1 = (Holder1) row.getTag();
                 holder1.number.setText(getItem(position));
                 holder1.frequency.setText(String.valueOf(mDataY[position]));
+                holder1.name.setText(mDataXLegend[position]);
                 break;
             case LAYOUT_TYPE_2:
             default:
@@ -131,11 +134,13 @@ public class DiagramDataAdapter extends BaseAdapter {
                     Holder2 holder2 = new Holder2();
                     holder2.number = (TextView) row.findViewById(R.id.phoneNumber2);
                     holder2.frequency = (TextView) row.findViewById(R.id.phoneFrequency2);
+                    holder2.name = (TextView) row.findViewById(R.id.cachedName2);
                     row.setTag(holder2);
                 }
                 Holder2 holder2 = (Holder2) row.getTag();
                 holder2.number.setText(getItem(position));
                 holder2.frequency.setText(String.valueOf(mDataY[position]));
+                holder2.name.setText(mDataXLegend[position]);
 
         }
         return row;
@@ -150,9 +155,11 @@ public class DiagramDataAdapter extends BaseAdapter {
         Log.i(TAG, "loadData: loading " + mCount + " items to the list adapter");
         mDataX = new String[mCount];
         mDataY = new int[mCount];
+        mDataXLegend = new String[mCount];
         for (int i = 0;  i < mCount; i++){
             mDataX[i] = data.getX(i);
             mDataY[i] = data.getY(i);
+            mDataXLegend[i] = data.getLegend(i);
         }
         notifyDataSetChanged();
     }
@@ -160,12 +167,14 @@ public class DiagramDataAdapter extends BaseAdapter {
     private static class Holder1 {
         public TextView number;
         public TextView frequency;
+        public TextView name;
 
     }
 
     private static class Holder2 {
         public TextView number;
         public TextView frequency;
+        public TextView name;
     }
 
 }

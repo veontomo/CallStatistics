@@ -18,12 +18,15 @@ public class CallHistogram implements DiagramData {
 
     private Integer[] yValues;
 
+    private String[] xValuesLegend;
+
     private Integer yMax = null;
 
     private Integer yMin = null;
 
     public CallHistogram(final List<Call> data) {
         List<String> x = new ArrayList<>();
+        List<String> xLegend = new ArrayList<>();
         List<Integer> y = new ArrayList<>();
         int pos;
         int newPos;
@@ -40,13 +43,16 @@ public class CallHistogram implements DiagramData {
                 newPos = findNewPosition(pos, y);
                 if (newPos != pos) {
                     String xVal = x.remove(pos);
+                    String legendValue = xLegend.remove(pos);
                     int yVal = y.remove(pos);
                     x.add(newPos, xVal);
+                    xLegend.add(newPos, legendValue);
                     y.add(newPos, yVal);
                 }
             } else {
                 freq = 1;
                 x.add(c.callNumber);
+                xLegend.add(c.name);
                 y.add(freq);
             }
             if (yMax == null || yMax < freq) {
@@ -62,6 +68,8 @@ public class CallHistogram implements DiagramData {
         xValues = x.toArray(xValues);
         yValues = new Integer[mSize];
         yValues = y.toArray(yValues);
+        xValuesLegend = new String[mSize];
+        xValuesLegend = xLegend.toArray(xValuesLegend);
 
     }
 
@@ -117,6 +125,8 @@ public class CallHistogram implements DiagramData {
         return yValues[i];
     }
 
+
+
     /**
      * Returns the maximal of y-values
      *
@@ -149,8 +159,14 @@ public class CallHistogram implements DiagramData {
             mSize = index;
             xValues = Arrays.copyOfRange(xValues, 0, mSize);
             yValues = Arrays.copyOfRange(yValues, 0, mSize);
+            xValuesLegend = Arrays.copyOfRange(xValuesLegend, 0, mSize);
             yMin = yValues[mSize-1];
         }
+    }
+
+    @Override
+    public String getLegend(int pos) {
+        return xValuesLegend[pos];
     }
 
 

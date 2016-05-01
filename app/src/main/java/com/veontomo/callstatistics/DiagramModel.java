@@ -119,7 +119,6 @@ public class DiagramModel {
         if (mPresenter != null) {
             mPresenter.loadData(mHistogram);
             mPresenter.loadListData(mHistogram);
-
         }
     }
 
@@ -141,9 +140,10 @@ public class DiagramModel {
             Log.i(TAG, "The cursor is null, so no data can be read.");
             return;
         }
-        int number = cursor.getColumnIndex(CallLog.Calls.NUMBER);
+        int numberColumn = cursor.getColumnIndex(CallLog.Calls.NUMBER);
+        int nameColumn = cursor.getColumnIndex(CallLog.Calls.CACHED_NAME);
         while (cursor.moveToNext()) {
-            Call c = new Call(cursor.getString(number));
+            Call c = new Call(cursor.getString(numberColumn), cursor.getString(nameColumn));
             stream.onNext(c);
         }
         cursor.close();

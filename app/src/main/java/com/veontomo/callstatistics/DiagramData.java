@@ -43,4 +43,7 @@ public interface DiagramData {
      */
     void truncate(int cutoff);
 
+
+    String getLegend(int pos);
+
 }

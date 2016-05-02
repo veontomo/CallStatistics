@@ -7,7 +7,7 @@ package com.veontomo.callstatistics;
  * and ignores all other information such as call duration, call direction (incoming/outcoming),
  * call time etc.
  */
-public class Call {
+class Call {
     public final String callNumber;
     public final String name;
 

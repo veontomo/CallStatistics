@@ -11,7 +11,7 @@ import android.widget.TextView;
 /**
  * A list adapter that displays a legend for the diagram.
  */
-public class DiagramDataAdapter extends BaseAdapter {
+class DiagramDataAdapter extends BaseAdapter {
     private static final String TAG = Config.appName;
     private final Context mContext;
     private String[] mDataX;

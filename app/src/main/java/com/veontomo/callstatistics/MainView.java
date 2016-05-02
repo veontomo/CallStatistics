@@ -13,12 +13,10 @@ import android.widget.Toast;
 public class MainView extends AppCompatActivity implements MVPView {
 
     private static final String TAG = Config.appName;
+
     private DiagramView mDiagramView;
-    private ListView mListView;
 
     private Presenter mPresenter;
-
-    private Spinner mTruncations;
 
     private DiagramDataAdapter mListAdapter;
 
@@ -31,34 +29,38 @@ public class MainView extends AppCompatActivity implements MVPView {
         mPresenter = Presenter.create(this);
         mPresenter.setAppContext(getApplicationContext());
         mDiagramView = (DiagramView) findViewById(R.id.diagramView);
-        mTruncations = (Spinner) findViewById(R.id.cutoffValues);
-        mTruncations.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                String value = parentView.getItemAtPosition(position).toString();
-                if (value != null) {
-                    int cutoff = Integer.parseInt(value);
-                    mPresenter.setCutoff(cutoff);
+
+        final Spinner mTruncations = (Spinner) findViewById(R.id.cutoffValues);
+        if (mTruncations != null) {
+            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                    R.array.truncations, R.layout.spinner);
+            adapter.setDropDownViewResource(R.layout.spinner_item);
+            mTruncations.setAdapter(adapter);
+
+            mTruncations.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                    String value = parentView.getItemAtPosition(position).toString();
+                    if (value != null) {
+                        int cutoff = Integer.parseInt(value);
+                        mPresenter.setCutoff(cutoff);
+                    }
                 }
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-                Log.i(TAG, "onItemSelected: nothing is selected");
-            }
+                @Override
+                public void onNothingSelected(AdapterView<?> parentView) {
+                    Log.i(TAG, "onItemSelected: nothing is selected");
+                }
+            });
+        }
 
-        });
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.truncations, R.layout.spinner);
-        adapter.setDropDownViewResource(R.layout.spinner_item);
-
-        mTruncations.setAdapter(adapter);
-
-        mListView = (ListView) findViewById(R.id.listView);
-        mListAdapter = new DiagramDataAdapter(getApplicationContext());
-        mListView.setAdapter(mListAdapter);
-        mListView.setEmptyView(findViewById(android.R.id.empty));
+        final ListView mListView = (ListView) findViewById(R.id.listView);
+        if (mListView != null) {
+            mListAdapter = new DiagramDataAdapter(getApplicationContext());
+            mListView.setAdapter(mListAdapter);
+            mListView.setEmptyView(findViewById(android.R.id.empty));
+        }
 
         mPresenter.initView();
     }

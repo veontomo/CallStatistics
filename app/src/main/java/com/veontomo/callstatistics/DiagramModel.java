@@ -23,13 +23,11 @@ import rx.subjects.PublishSubject;
 /**
  * Diagram model of MVP architecture
  */
-public class DiagramModel {
+class DiagramModel {
 
     private final Presenter mPresenter;
 
     private final List<Call> mCalls;
-
-    private final Subscriber<Call> mCallsReceiver;
 
     private final String TAG = Config.appName;
 
@@ -43,7 +41,7 @@ public class DiagramModel {
 
         mStream = PublishSubject.create();
 
-        mCallsReceiver = new Subscriber<Call>() {
+        final Subscriber<Call> mCallsReceiver = new Subscriber<Call>() {
 
             /**
              * Notifies the Observer that the {@link Observable} has finished sending push-based notifications.

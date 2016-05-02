@@ -134,37 +134,37 @@ public class CallHistogramTest {
     }
 
     @Test
-    public void findSmallerThanTheLast() throws Exception {
+    public void findSmallerThanTheLast() {
         CallHistogram diagram = new CallHistogram(null);
         assertEquals(5, diagram.findSmallerThan(1, new Integer[]{3, 2, 2, 2, 1}));
     }
 
     @Test
-    public void findSmallerThanTheLastRepeating() throws Exception {
+    public void findSmallerThanTheLastRepeating() {
         CallHistogram diagram = new CallHistogram(null);
         assertEquals(8, diagram.findSmallerThan(1, new Integer[]{3, 2, 2, 2, 1, 1, 1, 1}));
     }
 
     @Test
-    public void findSmallerThanNothing() throws Exception {
+    public void findSmallerThanNothing()  {
         CallHistogram diagram = new CallHistogram(null);
         assertEquals(4, diagram.findSmallerThan(1, new Integer[]{10, 7, 4, 3}));
     }
 
     @Test
-    public void findSmallerThanMiddle() throws Exception {
+    public void findSmallerThanMiddle()  {
         CallHistogram diagram = new CallHistogram(null);
         assertEquals(4, diagram.findSmallerThan(2, new Integer[]{3, 2, 2, 2, 1}));
     }
 
     @Test
-    public void findSmallerThanAll() throws Exception {
+    public void findSmallerThanAll()  {
         CallHistogram diagram = new CallHistogram(null);
         assertEquals(0, diagram.findSmallerThan(10, new Integer[]{3, 2, 2, 2, 1}));
     }
 
     @Test
-    public void findSmallerThanAllDifferent() throws Exception {
+    public void findSmallerThanAllDifferent() {
         CallHistogram diagram = new CallHistogram(null);
         assertEquals(5, diagram.findSmallerThan(5, new Integer[]{10, 9, 8, 7, 6, 4, 3, 2, 1}));
     }

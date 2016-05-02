@@ -21,7 +21,7 @@ public class Presenter {
      */
     private int mCutoff = 0;
 
-    public Presenter(MVPView view) {
+    private Presenter(MVPView view) {
         mView = view;
     }
 
@@ -32,14 +32,14 @@ public class Presenter {
         return presenter;
     }
 
-    public void setDiagramModel(DiagramModel diagramModel) {
+    private void setDiagramModel(DiagramModel diagramModel) {
         mDiagramModel = diagramModel;
     }
 
     /**
      * Requests data from the model
      */
-    public void requestData() {
+    private void requestData() {
         if (this.mDiagramModel != null) {
             mDiagramModel.prepareData();
         }

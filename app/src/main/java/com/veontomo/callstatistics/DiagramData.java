@@ -3,7 +3,7 @@ package com.veontomo.callstatistics;
 /**
  * Defines data to display on the diagram.
  */
-public interface DiagramData {
+interface DiagramData {
     /**
      * The number of the elements
      * @return

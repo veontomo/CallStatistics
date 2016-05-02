@@ -42,7 +42,6 @@ public class DiagramView extends View {
      * @param data
      */
     public void loadData(DiagramData data) {
-        Log.i(Config.appName, "loading data");
         this.mData = data;
         invalidate();
         requestLayout();
@@ -54,20 +53,16 @@ public class DiagramView extends View {
         super.onSizeChanged(w, h, oldw, oldh);
         width = w;
         height = h;
-        Log.i(Config.appName, "new width: " + w + ", new height: " + h + ", old width: " + oldw + ", old height: " + oldh);
     }
 
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        Log.i(Config.appName, "drawing");
         if (mData == null) {
             return;
         }
-
         final int mDataSize = mData.getSize();
-        Log.i(Config.appName, "data size: " + String.valueOf(mDataSize));
         if (mDataSize == 0) {
             return;
         }
@@ -75,11 +70,10 @@ public class DiagramView extends View {
         float scale = height / mData.getMax();
         float h;
         int colorCodesSize = colorCodes.length;
-        Log.i(Config.appName, "max: " + mData.getMax() + ", min: " + mData.getMin());
         for (int i = 0; i < mDataSize; i++) {
             h = scale * mData.getY(i);
             painter.setColor(colorCodes[i % colorCodesSize]);
-            canvas.drawRect(i * barWidth, height, (i + 1) * barWidth - 1, height - h, painter);
+            canvas.drawRect(i * barWidth, height - h, (i + 1) * barWidth - 1, height, painter);
         }
     }
 }

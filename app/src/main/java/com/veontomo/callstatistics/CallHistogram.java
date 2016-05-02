@@ -126,7 +126,6 @@ public class CallHistogram implements DiagramData {
     }
 
 
-
     /**
      * Returns the maximal of y-values
      *
@@ -155,12 +154,12 @@ public class CallHistogram implements DiagramData {
     @Override
     public void truncate(int cutoff) {
         int index = findSmallerThan(cutoff, yValues);
-        if (index < mSize) {
+        if (index < mSize && index > 0) {
             mSize = index;
             xValues = Arrays.copyOfRange(xValues, 0, mSize);
             yValues = Arrays.copyOfRange(yValues, 0, mSize);
             xValuesLegend = Arrays.copyOfRange(xValuesLegend, 0, mSize);
-            yMin = yValues[mSize-1];
+            yMin = yValues[mSize - 1];
         }
     }
 

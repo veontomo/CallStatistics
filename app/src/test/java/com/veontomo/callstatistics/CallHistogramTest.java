@@ -21,9 +21,9 @@ public class CallHistogramTest {
 
     @Test
     public void testSizeAllDifferentPhoneNumbers() {
-        Call c1 = new Call("a");
-        Call c2 = new Call("b");
-        Call c3 = new Call("c");
+        Call c1 = new Call("a", null);
+        Call c2 = new Call("b", null);
+        Call c3 = new Call("c", null);
         List<Call> data = new ArrayList<>();
         data.add(c1);
         data.add(c2);
@@ -34,9 +34,9 @@ public class CallHistogramTest {
 
     @Test
     public void testOrderAllDifferentPhoneNumbers() {
-        Call c1 = new Call("a");
-        Call c2 = new Call("b");
-        Call c3 = new Call("c");
+        Call c1 = new Call("a", null);
+        Call c2 = new Call("b", null);
+        Call c3 = new Call("c", null);
         List<Call> data = new ArrayList<>();
         data.add(c1);
         data.add(c2);
@@ -49,9 +49,9 @@ public class CallHistogramTest {
 
     @Test
     public void testFreqAllDifferentPhoneNumbers() {
-        Call c1 = new Call("a");
-        Call c2 = new Call("b");
-        Call c3 = new Call("c");
+        Call c1 = new Call("a", null);
+        Call c2 = new Call("b", null);
+        Call c3 = new Call("c", null);
         List<Call> data = new ArrayList<>();
         data.add(c1);
         data.add(c2);
@@ -65,9 +65,9 @@ public class CallHistogramTest {
 
     @Test
     public void testSizeCoincidingPhoneNumbers() {
-        Call c1 = new Call("a");
-        Call c2 = new Call("b");
-        Call c3 = new Call("a");
+        Call c1 = new Call("a", null);
+        Call c2 = new Call("b", null);
+        Call c3 = new Call("a", null);
         List<Call> data = new ArrayList<>();
         data.add(c1);
         data.add(c2);
@@ -78,9 +78,9 @@ public class CallHistogramTest {
 
     @Test
     public void testOrderCoincidingPhoneNumbers() {
-        Call c1 = new Call("a");
-        Call c2 = new Call("b");
-        Call c3 = new Call("a");
+        Call c1 = new Call("a", null);
+        Call c2 = new Call("b", null);
+        Call c3 = new Call("a", null);
         List<Call> data = new ArrayList<>();
         data.add(c1);
         data.add(c2);
@@ -92,9 +92,9 @@ public class CallHistogramTest {
 
     @Test
     public void testFreqCoincidingPhoneNumbers() {
-        Call c1 = new Call("a");
-        Call c2 = new Call("b");
-        Call c3 = new Call("a");
+        Call c1 = new Call("a", null);
+        Call c2 = new Call("b", null);
+        Call c3 = new Call("a", null);
         List<Call> data = new ArrayList<>();
         data.add(c1);
         data.add(c2);

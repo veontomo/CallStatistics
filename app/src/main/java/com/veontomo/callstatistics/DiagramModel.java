@@ -53,7 +53,6 @@ public class DiagramModel {
              */
             @Override
             public void onCompleted() {
-                Log.i(TAG, "onCompleted: mCallsReceiver is done");
                 mHistogram = new CallHistogram(mCalls);
                 onDataPrepared();
 
@@ -100,13 +99,9 @@ public class DiagramModel {
      * Prepares the data to display
      */
     public void prepareData() {
-        Log.i(TAG, "the model has received a request to prepare the data");
-
         if (mHistogram != null) {
-            Log.i(TAG, "prepareData: histogram contains " + mHistogram.getSize());
             onDataPrepared();
         } else {
-            Log.i(TAG, "prepareData: histogram is null");
             final Context context = mPresenter.getAppContext();
             if (context != null) {
                 readCallLog(context, mStream);
@@ -136,12 +131,12 @@ public class DiagramModel {
      */
     private void readCallLog(final Context context, final PublishSubject<Call> stream) {
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
-            Log.i(TAG, "no permissions");
+            mPresenter.onError("Missing permissions to read the call log.");
             return;
         }
         Cursor cursor = context.getContentResolver().query(CallLog.Calls.CONTENT_URI, null, null, null, CallLog.Calls.DATE + " DESC");
         if (cursor == null) {
-            Log.i(TAG, "The cursor is null, so no data can be read.");
+            mPresenter.onError("Can not read from the call log.");
             return;
         }
         int normalizedNumberColumn = cursor.getColumnIndex(CallLog.Calls.CACHED_NORMALIZED_NUMBER);
@@ -165,7 +160,8 @@ public class DiagramModel {
                     }
                 }
             } catch (NumberParseException e) {
-                Log.i(TAG, "readCallLog: error when parsing a phone number " + number + " with locale " + locale + ": " + e.getMessage());
+                Log.i(TAG, "readCallLog: error when parsing a phone number " + number + " with locale " + locale + " at position " + cursor.getPosition() + ": " + e.getMessage());
+
             }
 
             Call c = new Call(number, cursor.getString(nameColumn));

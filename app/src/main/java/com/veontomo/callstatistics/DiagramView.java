@@ -19,7 +19,7 @@ public class DiagramView extends View {
 
     private float width = 0;
     private float height = 0;
-    private Paint painter = new Paint();
+    private final Paint painter = new Paint();
 
     public DiagramView(Context context, AttributeSet attrs) {
         super(context, attrs);

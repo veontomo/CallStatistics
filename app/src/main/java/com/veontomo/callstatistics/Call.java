@@ -14,7 +14,6 @@ import com.google.i18n.phonenumbers.Phonenumber;
  * call time etc.
  */
 public class Call {
-    private static final String TAG = "CallStat";
     public final String callNumber;
     public final String name;
 

@@ -203,7 +203,7 @@ public class CallHistogram implements DiagramData {
             }
             return rightBound;
         }
-        if (data[leftBound] == data[rightBound]) {
+        if (data[leftBound].equals(data[rightBound])) {
             return rightBound + 1;
         }
         if (data[rightBound] == needle) {

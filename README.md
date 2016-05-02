@@ -12,7 +12,7 @@ The data is drawn as a standard histogram and is displayed as well as a simple l
 The app specs:
 
 1. it contains a single activity
-2. it contains two text views, one spinner, one custum list and one custom view
+2. it contains two text views, one spinner, one custom list and one custom view
 3. it is built using MVP approach
 4. it uses RxJava to fetch data from the call log.
 

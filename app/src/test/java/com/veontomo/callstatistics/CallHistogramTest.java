@@ -57,9 +57,9 @@ public class CallHistogramTest {
         data.add(c2);
         data.add(c3);
         CallHistogram diagram = new CallHistogram(data);
-        assertEquals(1, (int) diagram.getY(0));
-        assertEquals(1, (int) diagram.getY(1));
-        assertEquals(1, (int) diagram.getY(2));
+        assertEquals(1, diagram.getY(0));
+        assertEquals(1, diagram.getY(1));
+        assertEquals(1, diagram.getY(2));
     }
 
 

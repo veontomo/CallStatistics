@@ -36,7 +36,6 @@ public class DiagramModel {
     private final PublishSubject<Call> mStream;
 
     private CallHistogram mHistogram;
-    private Context mAppContext;
 
     public DiagramModel(final Presenter presenter) {
         mPresenter = presenter;
@@ -134,7 +133,7 @@ public class DiagramModel {
             mPresenter.onError("Missing permissions to read the call log.");
             return;
         }
-        Cursor cursor = context.getContentResolver().query(CallLog.Calls.CONTENT_URI, null, null, null, CallLog.Calls.DATE + " DESC");
+        final Cursor cursor = context.getContentResolver().query(CallLog.Calls.CONTENT_URI, null, null, null, CallLog.Calls.DATE + " DESC");
         if (cursor == null) {
             mPresenter.onError("Can not read from the call log.");
             return;

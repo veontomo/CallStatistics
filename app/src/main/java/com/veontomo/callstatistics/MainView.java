@@ -64,17 +64,6 @@ public class MainView extends AppCompatActivity implements MVPView {
     }
 
 
-    /**
-     * Loads data into the diagram view
-     *
-     * @param v
-     */
-    public void onDataRequested(View v) {
-        if (mPresenter != null) {
-            mPresenter.requestData();
-        }
-    }
-
     public void loadData(DiagramData data) {
         Log.i(Config.appName, "the view has received the data");
         if (mDiagramView != null) {

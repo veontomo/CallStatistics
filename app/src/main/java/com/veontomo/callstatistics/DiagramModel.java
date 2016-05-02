@@ -8,6 +8,10 @@ import android.provider.CallLog;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
+import com.google.i18n.phonenumbers.NumberParseException;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +36,7 @@ public class DiagramModel {
     private final PublishSubject<Call> mStream;
 
     private CallHistogram mHistogram;
+    private Context mAppContext;
 
     public DiagramModel(final Presenter presenter) {
         mPresenter = presenter;
@@ -118,7 +123,6 @@ public class DiagramModel {
     private void onDataPrepared() {
         if (mPresenter != null) {
             mPresenter.loadData(mHistogram);
-            mPresenter.loadListData(mHistogram);
         }
     }
 
@@ -144,11 +148,26 @@ public class DiagramModel {
         int numberColumn = cursor.getColumnIndex(CallLog.Calls.NUMBER);
         int nameColumn = cursor.getColumnIndex(CallLog.Calls.CACHED_NAME);
         String number;
+        PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
+        Phonenumber.PhoneNumber numberFormatted;
+        String locale = context.getResources().getConfiguration().locale.getCountry();
+        boolean hasCountryCode = locale != null && !(locale.isEmpty());
         while (cursor.moveToNext()) {
             number = cursor.getString(normalizedNumberColumn);
-            if (number == null){
+            if (number == null) {
                 number = cursor.getString(numberColumn);
             }
+            try {
+                if (hasCountryCode) {
+                    numberFormatted = phoneUtil.parse(number, locale);
+                    if (numberFormatted != null) {
+                        number = String.valueOf(numberFormatted.getNationalNumber());
+                    }
+                }
+            } catch (NumberParseException e) {
+                Log.i(TAG, "readCallLog: error when parsing a phone number " + number + " with locale " + locale + ": " + e.getMessage());
+            }
+
             Call c = new Call(number, cursor.getString(nameColumn));
             stream.onNext(c);
         }
@@ -160,4 +179,5 @@ public class DiagramModel {
         mHistogram.truncate(cutoff);
         onDataPrepared();
     }
+
 }

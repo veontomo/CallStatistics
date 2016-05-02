@@ -80,6 +80,11 @@ public class MainView extends AppCompatActivity implements MVPView {
         if (mDiagramView != null) {
             mDiagramView.loadData(data);
         }
+        if (mListAdapter != null) {
+            mListAdapter.loadData(data);
+        } else {
+            Log.i(TAG, "loadData: the list adapter is not defined");
+        }
     }
 
 
@@ -87,15 +92,5 @@ public class MainView extends AppCompatActivity implements MVPView {
     public void onError(String text) {
         Toast.makeText(MainView.this, text, Toast.LENGTH_SHORT).show();
     }
-
-    @Override
-    public void loadListData(final CallHistogram calls) {
-        if (mListAdapter != null) {
-            mListAdapter.loadData(calls);
-        } else {
-            Log.i(TAG, "loadListData: the list adapter is not defined");
-        }
-    }
-
 
 }

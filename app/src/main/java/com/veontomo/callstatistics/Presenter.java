@@ -84,15 +84,7 @@ public class Presenter {
         mView.onError(text);
     }
 
-    /**
-     * Passes the calls to the view
-     */
-    public void loadListData(CallHistogram calls) {
-        if (mView != null) {
-            mView.loadListData(calls);
-        }
 
-    }
 
     public void setCutoff(int cutoff) {
         if (cutoff != mCutoff) {

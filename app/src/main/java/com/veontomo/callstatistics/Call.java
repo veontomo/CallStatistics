@@ -1,8 +1,10 @@
 package com.veontomo.callstatistics;
 
-import android.os.Build;
-import android.telephony.PhoneNumberUtils;
 import android.util.Log;
+
+import com.google.i18n.phonenumbers.NumberParseException;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber;
 
 /**
  * Collects simple information about phone call.
@@ -19,16 +21,6 @@ public class Call {
     public Call(String callNumber, String name) {
         this.callNumber = callNumber;
         this.name = name;
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            // Log.i(TAG, "Call: formatted number " + PhoneNumberUtils.formatNumber(callNumber, "IT"));
-        } else {
-             // Log.i(TAG, "Call: formatted number " + PhoneNumberUtils.formatNumber(callNumber));
-
-        }
-
-
-
     }
 
 

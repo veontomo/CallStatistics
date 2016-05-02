@@ -150,7 +150,7 @@ public class DiagramDataAdapter extends BaseAdapter {
     /**
      * @param data
      */
-    public void loadData(final CallHistogram data) {
+    public void loadData(final DiagramData data) {
         mCount = data.getSize();
         Log.i(TAG, "loadData: loading " + mCount + " items to the list adapter");
         mDataX = new String[mCount];

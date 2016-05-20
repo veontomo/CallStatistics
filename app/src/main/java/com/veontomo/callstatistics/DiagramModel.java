@@ -136,7 +136,10 @@ class DiagramModel {
             mPresenter.onError("Can not read from the call log.");
             return;
         }
-        int normalizedNumberColumn = cursor.getColumnIndex(CallLog.Calls.CACHED_NORMALIZED_NUMBER);
+        int normalizedNumberColumn = 0;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            normalizedNumberColumn = cursor.getColumnIndex(CallLog.Calls.CACHED_NORMALIZED_NUMBER);
+        }
         int numberColumn = cursor.getColumnIndex(CallLog.Calls.NUMBER);
         int nameColumn = cursor.getColumnIndex(CallLog.Calls.CACHED_NAME);
         String number;

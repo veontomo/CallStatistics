@@ -31,17 +31,9 @@ interface DiagramData {
     int getMax();
 
 
-    /**
-     * Returns the minimal of y-values
-     * @return
-     */
-    int getMin();
 
-    /**
-     * Removes the elements whose y-value is less than given cutoff.
-     * @param cutoff
-     */
-    void truncate(int cutoff);
+
+
 
 
     String getLegend(int pos);

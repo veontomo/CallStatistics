@@ -136,22 +136,13 @@ public class CallHistogram implements DiagramData {
         return yMax;
     }
 
-    /**
-     * Returns the minimal of y-values
-     *
-     * @return
-     */
-    @Override
-    public int getMin() {
-        return yMin;
-    }
+
 
     /**
      * Removes the elements whose y-value is less than given cutoff.
      *
      * @param cutoff
      */
-    @Override
     public void truncate(int cutoff) {
         int index = findSmallerThan(cutoff, yValues);
         if (index < mSize && index > 0) {

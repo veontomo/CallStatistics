@@ -3,12 +3,14 @@
     <string name="no_results">No data available</string>
     <string name="description">The number of times you have called to or you have received a call from a given phone number</string>
     <string name="cutoff">Cutoff:</string>
-    <string-array name="truncations">
+    <string-array name="truncations" translatable="false">
         <item>1</item>
         <item>5</item>
         <item>10</item>
+        <item>20</item>
+        <item>30</item>
         <item>50</item>
-        <item>100</item>
+        <item>70</item>
     </string-array>
 
 </resources>

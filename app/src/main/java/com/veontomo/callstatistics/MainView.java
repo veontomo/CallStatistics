@@ -49,7 +49,7 @@ public class MainView extends AppCompatActivity implements MVPView {
 
                 @Override
                 public void onNothingSelected(AdapterView<?> parentView) {
-                    Log.i(TAG, "onItemSelected: nothing is selected");
+
                 }
             });
         }
@@ -67,7 +67,6 @@ public class MainView extends AppCompatActivity implements MVPView {
 
 
     public void loadData(DiagramData data) {
-        Log.i(Config.appName, "the view has received the data");
         if (mDiagramView != null) {
             mDiagramView.loadData(data);
         }

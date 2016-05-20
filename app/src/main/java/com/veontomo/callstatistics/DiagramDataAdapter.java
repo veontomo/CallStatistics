@@ -1,7 +1,6 @@
 package com.veontomo.callstatistics;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,6 @@ import android.widget.TextView;
  * A list adapter that displays a legend for the diagram.
  */
 class DiagramDataAdapter extends BaseAdapter {
-    private static final String TAG = Config.appName;
     private final Context mContext;
     private String[] mDataX;
     private String[] mDataXLegend;
@@ -152,7 +150,6 @@ class DiagramDataAdapter extends BaseAdapter {
      */
     public void loadData(final DiagramData data) {
         mCount = data.getSize();
-        Log.i(TAG, "loadData: loading " + mCount + " items to the list adapter");
         mDataX = new String[mCount];
         mDataY = new int[mCount];
         mDataXLegend = new String[mCount];
